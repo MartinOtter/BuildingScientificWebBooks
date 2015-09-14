@@ -1,6 +1,6 @@
 {
   "BackupDirectory"         : "../_backup",
-  "CoverFileName"           : "_cover.html",
+  "CoverFileName"           : "index.html",
   "TableOfContentsFileName" : "_tableofcontents.html",
   "SectionsFileNames"       : ["_preface.html",
                                "chapter_01.html",
