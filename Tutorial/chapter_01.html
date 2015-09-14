@@ -118,9 +118,9 @@ To build a web book, execute the command:
 </pre>
 
 <p>
-The executable "makeWebBook" is generated from the
+The executable "makeWebBook" was  generated from the open source
 <a href="https://golang.org/">Go program</a>
-"makeWebBook.go" that is available under the open source BSD license.
+"makeWebBook.go".
 It will modify the files under "bookDirectory" in the following way:
 </p>
 
@@ -128,7 +128,7 @@ It will modify the files under "bookDirectory" in the following way:
 <li> Specific HTML elements get a number, provided a corresponding
 &lt;h1&gt; element starts with the text <strong>Chapter</strong> or <strong>Appendix</strong>.
 (otherwise the &lt;h1&gt; section and all elements in the section are not modified; 
-this is useful for a <em>preface</em> or a <em>literature</em> chapter)
+this is useful for a <em>preface</em> or a <em>reference</em> chapter)
 In particular,
      &lt;h1&gt;, &lt;h2&gt;, &lt;h3&gt;, &lt;h4&gt; elements in the section files
      (= files listed in the configuration.json file under "SectionsFileNames") are updated
@@ -171,7 +171,7 @@ In particular,
 <li> The "table of contents" file is updated with the actual document
      structure. A template "table of contents" file should be provided by the user,
      in order to define the specific layout. A simple approach is to just
-     use the "_tableofcontents.html" file
+     use the "tableofcontents.html" file
      of this book as template. The text within the html comments
      
 <pre>&lt;!-- BeginTableOfContents --&gt;
@@ -193,8 +193,7 @@ This is an example of a h3 subsection. In the "tables of contents" file
 by default only h1 and h2 sections are shown. When clicking in the tool bar
 on "Expand/Collapse" also h3 and h4 sections, as well as figure and table
 captions are shown. The "Expand/Collapse" feature is implemented with a
-simple <em>jquery</em> script. Only for this reason, the Javascript library
-jquery is included under "resources/styles".
+simple <em>jquery</em> script.
 </p>
 
 <h4 id="h4subsection">1.3.1.1 Example of a h4 subsection</h4>
@@ -364,7 +363,7 @@ or introduces it, if it is not present. After the equation number a certain amou
 should be present. In jqmath thin space is defined by \\,, medium space by \\: and
 larger space by \\;. In this book, the larger space \\; is used 5 times. 
 Afterwards, the actual equation is present.
-Note, if an equaiton is defined just by \$\$ ... \$\$ but without a surrounding
+Note, if an equation is defined just by \$\$ ... \$\$ but without a surrounding
 &lt;div class="equation"&gt; element, the equation is <strong>not</strong> numbered.
  </p>
   
@@ -740,7 +739,7 @@ out to which part, a warning message is printed with an explanation.
 <p>
 As usual, the rendering of the files is defined by CSS-files. In this web book,
 a very simple CSS style file is used (resources/styles/stylesheet.css).
-Only in the "_tableofcontents.html" file additional CSS definitions are present to
+Only in the "tableofcontents.html" file additional CSS definitions are present to
 describe the special effects needed for a"table of contents". Of course, much more
 involved style files can be used for a web book
 (for example <a href="http://getbootstrap.com/">bootstrap</a>).
