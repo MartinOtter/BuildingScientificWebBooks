@@ -36,3 +36,13 @@ contents" file, the previous, and the next file.
 
 The "table of contents" file is updated with the actual document
 structure.
+
+This project consist of the following elements:
+
+````
+/Tutorial               // tutorial book of the approach
+/TemplateBook           // template to start a new book
+makeTemplateBook.bat    // clicking on it runs 
+                        // makeWebBook_win64.exe on TemplateBook
+makeWebBook_win64.exe   // makeWebBook command for win64
+````
