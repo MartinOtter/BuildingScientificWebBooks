@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="content-type">
+
+
+<title>Building a Web Book</title>
+  <link rel="stylesheet" type="text/css" href="resources/styles/stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="resources/styles/jqmath-0.4.3.css">
+  
+  <script type="text/javascript" src="resources/styles/modelica.js"></script>
+  <script type="text/javascript" src="resources/styles/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="resources/styles/jqmath-etc-0.4.3.min.js" charset="utf-8"></script>
+</head>
+
+<body>
+<nav>
+<ul>
+  <li><a href="_tableofcontents.html">Table of Contents</a></li>
+  <li><a href="_preface.html">Previous</a></li>
+  <li><a href="chapter_02.html">Next</a></li>
+</ul></nav>
+
+
+<main>
+
+<h1 id="BuildingWebBook">Chapter 1 - Steps to build a Scientific Web Book</h1>
+
+<p>
+The approach proposed in this book is sketched in this chapter.
+</p>
+
+<h2 id="FileStructure">1.1 File Structure</h2>
+
+<p>
+The files that shall form together a web book need to be all present in
+one directory. Example:
+</p>
+
+<pre>bookDirectory
+   /resources            // directory in which auxiliary files are stored
+   _cover.html
+   _preface.html
+   _tableofcontents.html
+   chapter_01.html
+   chapter_02.html
+   chapter_03.html
+   chapter_04.html
+   chapter_A.html
+   chapter_B.html
+   references.html
+</pre>
+
+<p>
+Separate files for the cover page (above: "_cover.html"),
+and a template for the table of contents page (above: "_tableofcontents.html")
+must be present. Additionally, the files containing the chapters,
+sections, appendices, references, preface etc. must be present. 
+In principal the files can follow
+any HTML standard. However, it is recommended to use the HTML5 standard
+(defined by the first line in the files: "<code>&lt;!DOCTYPE html&gt;</code>"),
+because new HTML elements like "&lt;nav&gt;", "&lt;figure&gt;", "&lt;footer&gt;" or "&lt;video&gt;"
+are only available in HTML5 (for details, see the list in
+<a href="http://www.w3schools.com/tags/ref_html_dtd.asp">w3schools</a>).</p>
+
+<p>
+All auxiliary files, like css, javascript, bitmap-image, svg-image, video, audio files
+that are used by the book files are recommended to be stored under one directory called 
+"<code>resources</code>".
+This has the advantage that the user can click on any file within
+"bookDirectory" to get part of the book. This is convenient if the book is
+stored locally on a disk.
+</p>
+
+<h2 id="h2-Defining_the_book_structure">1.2 Defining the Book Structure</h2>
+
+<p>
+In order that a tool can automatically build section numbers and a table of contents
+file, the order/sequence of the files need to be defined. This information must
+be defined in file "resources/configuration.json" in JSON format
+(this path, so directory "resources" and file name "configuration.json",
+is hard coded in makeWebBook to simplify the setup).
+Here is an example of configuration.json for this web book:
+</p>
+
+<pre>{
+  "BackupDirectory"         : "../_backup",
+  "CoverFileName"           : "_cover.html",
+  "TableOfContentsFileName" : "_tableofcontents.html",
+  "SectionsFileNames"       : ["chapter_01.html",
+                               "chapter_02.html",
+                               "chapter_03.html",
+                               "chapter_04.html"
+                               "literature.html",
+                               "chapter_A.html",
+                               "chapter_B.html"]
+}
+</pre>
+
+<p>
+All the file names are with respect to directory "bookDirectory".
+The "BackupDirectory" defines a directory (if it does not exist, it is
+created) in which backups shall be stored: Whenever a file needs to be modified,
+it is first moved in to the backup directory (under a newly created
+directory with the actual time stamp as directory name), and then the modified
+file is newly created. This approach is used in order to guard against bugs
+or non-foreseen situations in the "makeWebBook" executable (in case the modified
+file is corrupted, the original file is still present in the backup directory).
+</p>
+
+<h2 id="makeWebBook">1.3 Updating the Book</h2>
+
+<p>
+To build a web book, execute the command:
+</p>
+
+<pre>makeWebBook bookdirectory
+</pre>
+
+<p>
+The executable "makeWebBook" is generated from the
+<a href="https://golang.org/">Go program</a>
+"makeWebBook.go" that is available under the open source BSD license.
+It will modify the files under "bookDirectory" in the following way:
+</p>
+
+<ul>
+<li> Specific HTML elements get a number, provided a corresponding
+&lt;h1&gt; element starts with the text <strong>Chapter</strong> or <strong>Appendix</strong>.
+(otherwise the &lt;h1&gt; section and all elements in the section are not modified; 
+this is useful for a <em>preface</em> or a <em>literature</em> chapter)
+In particular,
+     &lt;h1&gt;, &lt;h2&gt;, &lt;h3&gt;, &lt;h4&gt; elements in the section files
+     (= files listed in the configuration.json file under "SectionsFileNames") are updated
+     with a section number, for example:
+     
+<pre>&lt;h1&gt;: <em>Chapter 3 - Operators and Expressions</em>
+&lt;h2&gt;: <em>3.2 Array Operators</em>
+&lt;h3&gt;: <em>3.2.3 Array Multiplication</em>
+&lt;h4&gt;: <em>3.2.3.5 Matrix Multiplication</em>
+&lt;h1&gt;: <em>Appendix B - Concrete Syntax</em>
+&lt;h2&gt;: <em>B.2 Grammar</em>
+&lt;h3&gt;: <em>B.2.4 Component Clause</em>
+</pre>
+     &lt;caption&gt; elements in the section files are updated with a 
+     caption number (the first number is the &lt;h1&gt; heading number), for example:
+<pre>&lt;caption&gt;: <em>Table 3-4: This is a table</em></pre>
+     &lt;figcaption&gt; elements in the section files are updated with a figcaption number (the first number is the &lt;h1&gt; heading number), for example:
+<pre>&lt;figcaption&gt;: <em>Figure 3-7: This is a figure</em></pre>     
+    Equations marked by <code>&lt;div class="equation"&gt; \$\$  ...  \$\$ &lt;div&gt;</code>
+    are updated with an equation number (note, it is important that
+    exactly the string <em>&lt;div class="equation"</em> is used with exactly 
+    <strong>one</strong> space between <code>div</code> and <code>class</code>). Example:
+<pre>&lt;div class="equation"&gt; \$\$ (2.1) \;\;\; ax^2 + bx + c = 0\$\$ &lt;div&gt;</pre>
+
+  If a number is not present, it is introduced.
+  If it is present and correct, nothing is changed.
+  Otherwise, the number is updated.<br>&nbsp;<br>
+  To summarize, when producing content just
+  ignore section, caption, equation numbers since they are introduced automatically with
+  the makeWebBook command.
+  Note, if one of the above elements does not have an attribute <em>id</em>,
+  it is automatically introduced as a random number
+  (in order that the table of contents file can link to this element).
+</li>
+
+<li> A navigation bar is introduced in the section files with links to the
+     "table of contents" file, the previous, and the next file.
+    </li>
+
+<li> The "table of contents" file is updated with the actual document
+     structure. A template "table of contents" file should be provided by the user,
+     in order to define the specific layout. A simple approach is to just
+     use the "_tableofcontents.html" file
+     of this book as template. The text within the html comments
+     
+<pre>&lt;!-- BeginTableOfContents --&gt;
+        ...
+&lt;!-- EndTableOfContents --&gt;
+</pre>
+     is replaced by the actual document structure. If no "table of contents" 
+     file is present, a default one is generated. </li>
+     
+<li> The "cover" file is not modified by makeWebBook in order to
+     allow specific layouts (e.g. some users might prefer to not have
+     a navigation bar in the cover file).</li>
+</ul>
+
+<h3 id="h3subsection">1.3.1 Example of a h3 subsection</h3>
+
+<p>
+This is an example of a h3 subsection. In the "tables of contents" file
+by default only h1 and h2 sections are shown. When clicking in the tool bar
+on "Expand/Collapse" also h3 and h4 sections, as well as figure and table
+captions are shown. The "Expand/Collapse" feature is implemented with a
+simple <em>jquery</em> script. Only for this reason, the Javascript library
+jquery is included under "resources/styles".
+</p>
+
+<h4 id="h4subsection">1.3.1.1 Example of a h4 subsection</h4>
+
+<p>
+This is an example of a h4 subsection. Also h5, h6 etc. subsections can
+be used in a document. However, the makeWebBook command processes subsections
+only up to h4 (so h5, h6 etc. remain unchanged and do not get a section number).
+</p>
+
+
+<h2 id="FiguresAndTables">1.4 Defining Figures and Tables</h2>
+
+<p>
+Figures are defined, as usual in HTML5, with element &lt;img&gt; for bitmaps or
+element &lt;svg&gt; for vector graphics together with a caption defined with
+element &lt;figcaption&gt;. For example
+</p>
+
+<pre>&lt;figure&gt;
+  &lt;figcaption id="fig-Drive_Train_1"&gt;Simple drive train 1&lt;/figcaption&gt;
+  &lt;img src="resources/media/drive1.png"/&gt;&lt;br&gt;
+&lt;figure&gt;
+</pre>
+
+<p>
+is rendered as
+</p>
+
+<figure>
+  <figcaption id="fig-Drive_Train_1">Figure 1-1: Simple drive train 1</figcaption>
+  <img src="resources/media/drive1.png"><br>
+</figure>
+
+<p>
+In a similar way a table defined as
+</p>
+
+<pre>&lt;table&gt;
+&lt;caption id="table-Example_for_a_table"&gt;Example for a table&lt;/caption&gt;
+&lt;tr&gt;&lt;th&gt;Column header 1&lt;/th&gt;
+    &lt;th&gt;Column header 2&lt;/th&gt;
+    &lt;th&gt;Column header 3&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Row 2-1&lt;/td&gt;
+    &lt;td&gt;Row 2-2&lt;/td&gt;
+    &lt;td&gt;Row 2-3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Row 3-1&lt;/td&gt;
+    &lt;td&gt;Row 3-2&lt;/td&gt;
+    &lt;td&gt;Row 3-3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+</pre>
+
+<p>
+is rendered as
+</p>
+
+<table>
+<caption id="table-Example_for_a_table">Table 1-1: Example for a table</caption>
+<tbody>
+<tr><th>Column header 1</th>
+    <th>Column header 2</th>
+    <th>Column header 3</th>
+</tr>
+<tr>
+<td>Row 2-1</td>
+    <td>Row 2-2</td>
+    <td>Row 2-3</td>
+</tr>
+<tr>
+<td>Row 3-1</td>
+    <td>Row 3-2</td>
+    <td>Row 3-3</td>
+</tr>
+</tbody></table>
+
+
+<h2 id="h2-MathematicalEquations">1.5 Defining Mathematical Equations</h2>
+
+<p>
+Mathematical equations are a central element in every scientific book.
+There is no fully satisfactory solution to define equations on a web page
+or in a web book. Defining an equation in another program, making a screen
+shot and then  include it as a figure is (a) inconvenient to do and (b) the 
+display quality is not good, especially when zooming in or out.
+In the approach from this web book, instead the open source
+Javascript library <a href="http://mathscribe.com/author/jqmath.html">jqmath</a>
+is used that constructs mathematical equations with a combination of Javascript,
+MathML and mathematical symbols of Unicode. Similar as for section headings,
+figure and table headings, the "makeWebBook" program also numbers the equations.
+In the next subsection, it is shown how to practically use <em>jqmath</em>.
+In subsection <a href="#sec-why_jqmath_and_not_mathjax" title="1.5.2 Why jqmath and not MathJax?">1.5.2</a> it is explained
+why the popular Javascript library <a href="https://www.mathjax.org/">MathJax</a>
+is <strong>not</strong> used (most likely the automatic equation numbering
+would also work for MathJax, but this has not been tested).
+</p>
+
+<h3 id="sec-how_to_use_jqmath">1.5.1 How to use jqmath</h3>
+
+<p>
+In order that jqmath can be used, the following lines must be copied
+into the head section of the HTML file to load the needed Javascript
+library and CSS definitions from the <code>resources/styles</code>
+directory:
+</p>
+
+<pre>&lt;link rel="stylesheet" type="text/css" href="resources/styles/jqmath-0.4.3.css"&gt;
+&lt;script type="text/javascript" src="resources/styles/jquery-2.1.4.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="resources/styles/jqmath-etc-0.4.3.min.js" charset="utf-8"&gt;&lt;/script&gt;
+</pre>
+
+<p>
+Afterwards mathematical equations can be formulate.
+The following line contains an inline formula:
+</p>
+
+<p class="indent">If $ax^2+ bx + c = 0$ with $a,b,c,x ∊ ℝ$ and $a ≠ 0$, then 
+    <a href="#eq-solveQuadraticEquation">(1.1)</a> holds:
+</p>
+
+<p>
+This line is defined in HTML as
+</p>
+
+<pre>If \$ax^2+ bx + c = 0\$ with \$a,b,c,x ∊ ℝ\$ and \$a ≠ 0\$, ...
+</pre>
+
+<p>
+A jqmath inline formula is delimited by \$ ... \$. Characters like "∊" are regular 
+Unicode characters that are used in the equation. A large set of often used
+mathematical Unicode symbols of this kind are listed on the
+<a href="http://mathscribe.com/author/jqmath.html">jqmath web page</a>
+(and in <a href="chapter_B.html#ref-appendix_b" title="Appendix B - jqmath Symbols">Appendix B</a>)
+and can be selected and copied into a text editor.
+</p>
+
+<p>
+The next line shows a block equation that is numbered:
+</p>
+
+<div class="equation" id="eq-solveQuadraticEquation">
+$$ (1.1) \;\;\;\;\;
+   x_{1,2} = {-b ± √{b^2-4ac} } / {2a}
+$$
+</div>
+
+<p>
+This equation is defined in HTML in the following way:
+</p>
+
+<pre>&lt;div class="equation" id="eq-solveQuadraticEquation"&gt;
+\$\$ (1.1) \;\;\;\;\;
+   x_{1,2} = {-b ± √{b^2-4ac} } / {2a}
+\$\$
+&lt;/div&gt;
+</pre>
+
+<p>
+The <code>&lt;div ...&gt;</code> block defines that the included part contains a numbered equation.
+The <code>id</code>&nbsp; is used in order to reference the equation from somewhere else. 
+The block equation is defined by \$\$ ... \$\$. The same technique as for inline equations is 
+used to define the actual block equation. However, directly after the starting \$\$ the equation 
+number must be present, here: (1.1). The "makeWebBook" program updates this number automatically
+or introduces it, if it is not present. After the equation number a certain amount of space 
+should be present. In jqmath thin space is defined by \\,, medium space by \\: and
+larger space by \\;. In this book, the larger space \\; is used 5 times. 
+Afterwards, the actual equation is present.
+Note, if an equaiton is defined just by \$\$ ... \$\$ but without a surrounding
+&lt;div class="equation"&gt; element, the equation is <strong>not</strong> numbered.
+ </p>
+  
+<p>Below other examples are present that show the type of equations that can be described with jqmath. In order to figure out how these definitions have been made, inspect the source code of this HTML file.</p>
+  
+<p class="indent">
+Newtons equations for the angular momentum in one dimension is stated as:
+</p>
+
+<div class="equation" id="eq-angularMomentum1Dim">
+$$ (1.2) \;\;\;\;\;
+   J · ω ↖ {.} = τ
+$$
+</div>
+
+<p class="indent">
+The vector equations for linear and angular
+momentum in three dimensions can be defined as:
+</p>
+
+<div class="equation" id="eq-angularMomentum3Dim">
+$$ (1.3) \;\;\;\;\; 
+   \table      m · \bi v↖{.}                         , = , \bi f ;
+           \bi I · \bi ω↖{.} + \bi ω × \bi I · \bi ω , = , \bi τ 
+$$
+</div>
+
+<p>
+The following lines are from Appendix D of the Modelica Specification:
+</p>
+  
+<p class="indent">
+Consider a connection set with n connectors. The mixing enthalpy is defined by the mass balance
+</p>
+
+<div class="equation" id="eq-mass-balance">
+$$  (1.4) \;\;\;\;\; 
+   0 = ∑↙{j=0..n} m↖{.}_j
+$$
+</div>
+
+<p class="indent">
+and the energy balance
+</p>
+
+<div class="equation" id="eq-energy-balance">
+$$  (1.5) \;\;\;\;\; 
+   0 = ∑↙{j=0..n} H↖{.}_j
+$$
+</div>
+
+<p class="indent">
+with
+</p>
+
+<div class="equation" id="eq-enthalpy-flow">
+$$  (1.6) \;\;\;\;\; 
+   H↖{.}_j = m↖{.}_j · \{ {\table h_{mix}       , \bo\text"if" \;\; m↖{.}_j > 0 ; 
+                                  h_{outflow_j} , \bo\text"if" \;\; m↖{.}_j ≤ 0}
+$$
+</div>
+
+<p>
+The following equation is a direct copy of equation (10) of
+<a href="references.html#ref-Heckmann_et_al_2012" title="The Modeling of Flexible Bodies in the object-oriented multi-domain Framework Modelica">(Heckmann et al. 2012)</a>
+showing a complex matrix equation:
+</p>
+
+<div class="equation" id="eq-flexible-body-equations">
+$$  (1.7) \;\;\;\;\; 
+   (\table m \bi I_3              ,               , sym.;
+           m \bi d↖{~}_{CM}(\bo q), \bi J(\bi q)  ,             ;
+           \bi C_t(\bi q)         , \bi C_r(\bi q), \bi M_e )  \; 
+   [\table \bi a_R; \bi ω↖{.}_R; \bi q↖{..} ] \; = \; 
+   \bi h_ω (\bi ω, \bi q, \bi q↖{.}) \; - \;  
+   [ \table \bo 0; \bo 0; \bi K_e \bi q + \bi D_e \bi q↖{.}] \; + \;
+   \bi h_e (\bi q)
+$$
+</div>
+  
+
+<h3 id="sec-why_jqmath_and_not_mathjax">1.5.2 Why jqmath and not MathJax?</h3>
+
+<p>
+The Javascript library <a href="https://www.mathjax.org/">MathJax</a>
+provides the most sophisticated approach for rendering equations on the web.
+It is also cited and referenced a lot. The main advantage of MathJax is
+the quality of the rendering in any web browser, as stated on the MathJax
+web page: "<em>Beautiful math in all browsers</em>". For this approach
+it uses a combination of HTML, CSS, special fonts (such as STIX fonts),
+MathML and SVG depending on the available features of the underlying browser.
+</p>
+
+<p>
+The drawbacks of MathJax are:
+</p>
+
+<ol>
+<li> MathJax has <em>very slow rendering</em>. For example in MathJax version 2.5
+     it takes several seconds on my (fast) computer to render even simple
+     equations. You can easily try this by your self by inspecting
+     <a href="https://www.mathjax.org/#modal-samples">MathJax examples</a>
+     from the MathJax web page. In contrast, jqmath is much faster and
+     rendering equations is as fast as any other HTML text.</li>
+     
+<li> MathJax is <em>huge</em>. The MathJax 2.5 distripution is a 33 Mbyte zip-file.
+     The unzipped installation has a size of 57 Mbyte. Therefore, the only practical
+     way to work with MathJax is via a web server (either the MathJax web server or
+     an own local one). The goal of the approach described in this book is to 
+     copy a web book to a local computer and read it without internet connection
+     or any other resources (in a similar way as an epub book).
+     It is not practical to ship with every book 57 Mbyte of style files and fonts.
+     I tried to reduce this and by "trial and error" manually reduced the distribution
+     until only the highest quality approach with HTML + CSS + STIX fonts was 
+     kept and all other approaches are removed. This gave a distribution of about 2 Mbyte size
+     (unzipped). This is still large and not very practical.
+     The jqmath distribution has a size of 43 Kbyte (+ 83 Kbyte for jquery which is also
+     used for other purposes in the book) and can therefore easily be shipped with every 
+     web book.</li>
+     
+<li> MatJax defines equations with LaTeX, whereas jqmath defines equations in a TeX
+     like way, where keywords are replaced by Unicode mathematical characters
+     (e.g. instead of using the TeX keyword <code>\omega</code> the Unicode character
+     <code>ω</code> is used).
+     If the underlying text editor can display
+     these symbols (see section <a href="chapter_02.html#TextEditors" title="2.2 Text Editors supporting Mathematical Symbols">2.2</a> for details),
+     then equations with jqmath are more compact and easier
+     to read as the LaTeX definition with its many keywords. Here is an example
+     of equation <a href="#eq-solveQuadraticEquation">(1.1)</a>.<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;LaTeX definition&nbsp; : <code>x_{1,2} = \frac{{ -b \pm \sqrt{b^2 - 4ac} }}{{2a}}}</code><br>
+     &nbsp;&nbsp;&nbsp;&nbsp;jqmath definition: <code>x_{1,2} = {-b ± √{b^2-4ac} } / {2a}</code><br>
+     Here is an example of equation <a href="#eq-angularMomentum1Dim">(1.2)</a>.<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;LaTeX definition&nbsp; : <code>J \cdot \dot{\omega} = \tau</code><br>
+     &nbsp;&nbsp;&nbsp;&nbsp;jqmath definition: <code>J·ω↖{.} = τ</code><br>
+     </li>     
+</ol>
+
+<p>
+The jqmath approach has the following drawbacks:
+</p>
+
+<ol>
+<li> From the jqmath web page:
+     "<em>The jqmath Javascript library uses MathML when available 
+     else simple HTML and CSS, and avoiding pixel-map images</em>".
+     Good rendering results can only be expected if the underlying
+     browser supports MathML. For example, rendering this page with Internet Explorer 9
+     shows the above equations, but the rendering is very bad because
+     Internet Explorer 9 does not support MathML.
+     Note, Chrome does not support MathML anymore
+     see <a href="http://www.quora.com/Why-did-Chrome-drop-MathML-support">here</a> for some explanation.
+     </li>
+<li> In the MathJax documentation it is stated that browsers have rendering bugs for
+     MathML even if they claim to support MathML and therefore it is usually safer
+     to use the HTML+CSS+Font approach in MathJax instead of the MathML approach.
+     </li>
+<li> Not every equation that can be expressed with MathJax/LaTeX 
+     can also be expressed with jqmath (so MathJax/LaTeX is more general).
+     The jqmath examples in section <a href="#sec-how_to_use_jqmath" title="1.5.1 How to use jqmath">1.5.1</a> 
+     and on the <a href="http://mathscribe.com/author/jqmath.html">jqmath web page</a>
+     show that the difference is not large. The following features are currently
+     recognized to be available in MathJax/LaTeX but not in jqmath:
+     <ul>
+     <li> In LaTeX a more fine grained positioning of equations below
+          each other is possible.</li>
+     <li> In LaTeX a more fine grained positioning of the elements
+          in an array is possible.</li>          
+     <li> In LaTeX several equations that are defined together can be
+          numbered as, say, (2.1a), (2.1b) etc. It is not clear how to
+          support such numbering with the concept presented here.</li>
+     </ul>     
+</ol>
+   
+<p>
+This book has been developed with Firefox version 40 and renders here nicely.
+Also other Gecko-based browsers should be fine.
+</p>
+
+
+<h2 id="SourceCode">1.6 Defining Source Code Syntax Highlighting</h2>
+
+<p>
+As usual in HTML, source code of a programming or modeling language can be
+defined in a &lt;pre&gt; environment. In order to get automatic syntax highlighting,
+Javascript can be used. In this web book, a Javascript script (= resources/styles/modelica.js) is provided for
+the modeling language <a href="https://www.modelica.org/">Modelica</a>.
+For example, Modelica code defined as
+</p>
+
+<pre>&lt;pre class="Modelica"&gt;
+model Inertia "1D-rotational component with inertia"
+  import Modelica.Mechanics.Rotational;
+  parameter SI.Inertia J(min=0, start=1) "Moment of inertia";
+  Rotational.Interfaces.Flange_a flange_a;
+  Rotational.Interfaces.Flange_b flange_b;
+  SI.Angle phi "Absolute rotation angle of component";
+  SI.AngularVelocity w "Absolute angular velocity of component (= der(phi))";
+equation
+  // The two flanges are rigidly connected
+  phi = flange_a.phi;
+  phi = flange_b.phi;
+
+  // Momentum equation
+  w = der(phi);
+  J*der(w) = flange_a.tau + flange_b.tau;
+end Inertia;
+&lt;/pre&gt;
+</pre>
+
+<p>
+is rendered as
+</p>
+
+<pre class="Modelica">model Inertia "1D-rotational component with inertia"
+  import Modelica.Mechanics.Rotational;
+  parameter SI.Inertia J(min=0, start=1) "Moment of inertia";
+  Rotational.Interfaces.Flange_a flange_a;
+  Rotational.Interfaces.Flange_b flange_b;
+  SI.Angle phi "Absolute rotation angle of component";
+  SI.AngularVelocity w "Absolute angular velocity of component (= der(phi))";
+equation
+  // The two flanges are rigidly connected
+  phi = flange_a.phi;
+  phi = flange_b.phi;
+
+  // Momentum equation
+  w = der(phi);
+  J*der(w) = flange_a.tau + flange_b.tau;
+end Inertia;
+</pre>
+
+<p>
+For other languages there are many Javascript libraries on the web that
+provide syntax highlighting, for example
+<a href="https://highlightjs.org/">highlightjs</a>,
+<a href="https://craig.is/making/rainbows">rainbows</a>,
+<a href="https://github.com/google/code-prettify">google-code-prettify</a>.
+All these libraries, as well as the special Modelica Javascript
+library provided by this book, use regular expressions to parse the
+code and then highlight syntax elements. This means that syntax highlighting
+is not perfect, because most languages cannot be parsed just by a regular
+  expression parser (this means in corner cases there might be "wrong"
+syntax highlighting).</p>
+
+
+<h2 id="h2-BibliographicReferences">1.7 Defining Bibliographic References</h2>
+
+<p>
+An example of a <em>reference section</em> is shown in section <a href="references.html">References</a>: </p>
+
+<pre>&lt;ul class="references"&gt;
+    &lt;li id="ref-Benveniste_et_al._2003" title="(Benveniste et al. 2003)" &gt; ... &lt;/li&gt;
+    &lt;li id="ref-Colaco_and_Pouzet_2003" 
+           title="(Colaco and Pouzet 2003)"&gt;Colaco J.-L., and Pouzet M. (2003):
+           &lt;strong&gt;Clocks as First Class Abstract Types&lt;/strong&gt;. 
+           In Third International ...&lt;/li&gt;
+    ...<br>&lt;/ul&gt;
+</pre>
+
+<p>
+The different items are defined as an unordered list. The list start
+<code>&lt;ul class="references"&gt;</code> defines a special formatting via the
+CSS style file (resources/styles/stylesheet.css) by removing the "bullet" point 
+and formating the list entry as usual in a references section.
+Additionally, every list entry is marked by an "<code>id</code>" such as <code>id="ref-Colaco_and_Pouzet_2003"</code>,
+to reference this bibliographic element and by "<code>title</code>" such as
+<code>(Benveniste et al. 2003)</code> to define how the element shall be referenced
+in the text. Bibliographic elements can be referenced in the main part of a book in the following way:
+</p>
+  
+<ul>
+<li> "The approach in this chapter is based on the clock calculus and inference system proposed by 
+      <a href="references.html#ref-Colaco_and_Pouzet_2003" title="Clocks as First Class Abstract Types">(Colaco and Pouzet 2003)</a>"
+     </li>
+<li> "These approaches belong to the class of synchronous languages 
+     <a href="references.html#ref-Benveniste_et_al._2003" title="The Synchronous Languages Twelve Years Later">(Benveniste et al. 2003)</a>."</li>
+</ul>
+  
+<p> A reference is just a link where the <code>id</code> from the reference section is used, for example:</p>
+  
+<pre>... and inference system proposed by
+     (&lt;a href="#ref-Colaco_and_Pouzet_2003"&gt;&lt;/a&gt;)
+</pre>
+
+<p>
+The <code>makeWebBook</code> program changes this definition in the HTML file to:
+<p>
+
+<pre>... and inference system proposed by
+     (&lt;a href="<span style="color: DarkOrange;">references.html</span>#ref-Colaco_and_Pouzet_2003" 
+         <span style="color: DarkRed;">title="Clocks as First Class Abstract Types"</span>&gt;<span style="color: Crimson;">(Colaco and Pouzet 2003)</span>&lt;/a&gt;)
+</pre>
+
+<p>
+The following changes are made (or existing attributes are updated):
+</p>
+
+<ul>
+<li> The name of the file is introduced where the <code>id</code> is defined
+     (here: <code><span style="color: DarkOrange;">references.html</span></code>).</li>
+     
+<li> The <code>title</code> definition of the reference section is used as link text
+     (here: <code><span style="color: Crimson;">(Colaco and Pouzet 2003)</span></code>).</li>
+     
+<li> The text that is within the <code>&lt;strong&gt; ... &lt;/strong&gt;</code>
+     marking in the reference section is used as tooltip by defining 
+     it as <code>title</code> attribute
+     (here: <code><span style="color: DarkRed;">title="Clocks as First Class Abstract Types"</span></code>).
+     As a result, when hovering with the mouse over the link, this title is displayed, 
+     see next figure, or try it directly out by hovering over one of the references above:
+     <figure>
+     <figcaption id="tooltip">Figure 1-2: When hovering over a cross reference the title attribute is displayed</figcaption>
+       <img src="resources/media/tooltip.png"><br>
+     </figure></li>
+</ul>
+  
+<h2 id="h2-CrossReferences">1.8 Defining Cross References</h2>
+
+<p>
+Besides cross references to bibliographic elements, 
+see section <a href="#h2-BibliographicReferences" title="1.7 Defining Bibliographic References">1.7</a>,
+also sections, figures, tables, and equations can be referenced. As with bibliographic elements it 
+is sufficient to just use a definition of the form <code>&lt;a href="xxx">&lt;/a&gt;</code>
+and the <code>makeWebBook</code> program adds the file name, the link text, and a tool tip.
+For example, the following cross reference definitions:
+</p>
+
+<pre>see &lt;a href="#h1-tools"&lt;/a&gt;&lt;br&gt;
+see section &lt;a href="#h2-Defining_the_book_structure">&lt;/a&gt;&lt;br&gt;
+see &lt;a href="#fig-Drive_Train_1">&lt;/a&gt;&lt;br&gt;
+see &lt;a href="#table-Example_for_a_table">&lt;/a&gt;&lt;br&gt;
+see equation &lt;a href="#eq-flexible-body-equations">&lt;/a&gt;&lt;br&gt;
+</pre>
+
+<p>
+are changed (or existing attributes are updated if needed)
+by the <code>makeWebBook</code> program to:
+</p>
+
+<pre>see &lt;a href="chapter_02.html#h1-tools" title="Chapter 2 - Tools"&gt;Chapter 2&lt;/a&gt;&lt;br&gt;
+see section &lt;a href="#h2-Defining_the_book_structure" title="1.2 Defining the Book Structure"&gt;1.2&lt;/a&gt;&lt;br&gt;
+see &lt;a href="#fig-Drive_Train_1" title="Figure 1-1: Simple drive train 1"&gt;Figure 1-1&lt;/a&gt;&lt;br&gt;
+see &lt;a href="#table-Example_for_a_table" title="Table 1-1: Example for a table"&gt;Table 1-1&lt;/a&gt;&lt;br&gt;
+see equation &lt;a href="#eq-flexible-body-equations"&gt;(1.7)&lt;/a&gt;&lt;br&gt;
+</pre>
+
+<p>
+resulting in
+</p>
+
+<p class="indent">
+see <a href="chapter_02.html#h1-tools" title="Chapter 2 - Tools">Chapter 2</a><br>
+see section <a href="#h2-Defining_the_book_structure" title="1.2 Defining the Book Structure">1.2</a><br>
+see <a href="#fig-Drive_Train_1" title="Figure 1-1: Simple drive train 1">Figure 1-1</a><br>
+see <a href="#table-Example_for_a_table" title="Table 1-1: Example for a table">Table 1-1</a><br>
+see equation <a href="#eq-flexible-body-equations">(1.7)</a><br>
+</p>
+
+<p>
+If a link contains a tool tip, it is displayed in <em>italic</em> font.
+As can be seen above, with exception of the 
+"see equation <a href="#eq-flexible-body-equations">(1.7)</a>"
+cross reference, all cross references have a tool tip.
+</p>
+
+<p>
+If a link seems to link to another part of the book but it cannot be figured
+out to which part, a warning message is printed with an explanation.
+</p>
+
+<h2 id="StyleFiles">1.9 Style Files</h2>
+
+<p>
+As usual, the rendering of the files is defined by CSS-files. In this web book,
+a very simple CSS style file is used (resources/styles/stylesheet.css).
+Only in the "_tableofcontents.html" file additional CSS definitions are present to
+describe the special effects needed for a"table of contents". Of course, much more
+involved style files can be used for a web book
+(for example <a href="http://getbootstrap.com/">bootstrap</a>).
+When including a new style file, there is always the risk that there is an
+unwanted interdependence with style files already present. It is then not often
+easy to figure out, why a page does no longer look as expected.
+For example, when introducing the "jqmath-0.4.3.css" style file to display
+jqmath equations, the equation looked not as good as on the jqmath web page.
+The reason was that a "*" CSS definition was present in 
+stylesheet.css to define a default font and font size for all elements.
+After removing this default setting, the equations are displayed
+as they should.
+</p>
+</main>
+
+</body></html>

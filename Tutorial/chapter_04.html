@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="content-type">
+
+<title>Other Alternatives</title>
+<link rel="stylesheet" type="text/css" href="resources/styles/stylesheet.css">
+</head>
+
+<body>
+
+<nav><ul>
+  <li><a href="_tableofcontents.html">Table of Contents</a></li>
+  <li><a href="chapter_03.html">Previous</a></li>
+  <li><a href="chapter_A.html">Next</a></li>
+</ul></nav>
+
+
+<main>
+
+<h1 id="OtherAlternatives">Chapter 4 - Other Alternatives</h1>
+
+<p>
+There are other alternatives to build a scientific web book. The following
+(incomplete) discussion summarizes information from the Modelica trac ticket
+<a href="https://trac.modelica.org/Modelica/ticket/1730">1730</a>.
+</p>
+
+<h2 id="epub3">4.1 Epub3</h2>
+
+<p>
+The web standard for electronic (HTML) books is
+<a href="https://en.wikipedia.org/wiki/EPUB">Epub</a>.
+It is  used by a large community.
+The newest version 3.0.x (epub3) supports additionally svg, MathML and Javascript. 
+Epub is interesting because a lot of development work is being done. 
+Since there is a huge commercial interest, tools are available (for Epub2)
+or are becoming available (for Epub3). A reasonable open source epub2/3 editor
+is <a href="http://calibre-ebook.com/download_portable">Calibre</a>.
+It provides most of the commands via a toolbar
+and shows the rendering result at once in a second window. 
+There are also commercial editors that have a true WYSIWYG editing facility 
+(e.g. <a href="http://www.bluegriffon-epubedition.com/BGEE.html">BlueGriffon</a>).
+</p>
+
+<p>
+Epub3 has currently several drawbacks:
+</p>
+
+<ul>
+<li> Tool vendors are mostly interested in closed environments with 
+     specific digital rights management (e.g., Apple, Amazon, ...).</li>
+<li> Tools do not yet support the full epub3 standard and it takes a lot
+     of effort to figure out the parts of the web standards that are not
+     yet supported (e.g. no/partial support for mathml, svg).</li>
+<li> Although some epub3 tools support Javascript, it is usually disabled for 
+     security reasons. Therefore, using Javascript in the
+     book gives a convenience issue: One has to tell the user that he/she has
+     to explicitly enable Javascript in the respective tool, in order that the book
+     "looks good".</li>
+<li> A user needs an epub3 viewer. He/she cannot just click on a web page
+     to see the book.</li>
+<li> All the issues with section, caption, equation numbers seem to not yet
+     been tackled by the tools.</li>
+<li> It is not practical to use an open source code management system like
+     <a href="https://github.com/">github</a>
+     to work collaboratively on the same document (like a language specification)
+     including versioning, determining version differences, issue tracking,
+     because all files of the epub book are zipped (so it is binary format).
+     </li>
+</ul>
+
+
+<h2 id="OfficeApplications">4.2 Office Applications</h2>
+
+<p>
+The best WYSIWYG (What You See Is What You Get) editors are the ones for
+office applications, such as Microsoft Word, OpenOffice, LibreOffice,
+GoogleDocs etc. So, one could use one of them as "mother" version and when
+a new version of the book is needed, a pure HTML version could be constructed. 
+</p>
+
+<p>
+The drawbacks are:
+</p>
+
+<ul>
+<li> Several office applications have been evaluated to generate HTML code for web applications, including Word 2013, OpenOffice, 
+     LibreOffice, Calligra, Abiword. The result is just a mess.
+     Especially, it seems not possible to make this process automatic and manual work seems always to be needed.
+     Some tools are also unstable (easily crash for the Modelica Language
+     specification).</li>
+
+<li> It seems not practical to use an open source code management system like
+     <a href="https://github.com/">github</a>
+     to work collaboratively on the same document because a binary file format is used
+     (or more precisely, xml text files that are zipped).</li>
+</ul>
+      
+
+<h2 id="MarkupLanguages">4.3 Markup Languages (Markdown, Pandoc, ReStruturedText, Sphinx)</h2>
+
+<p>
+There are many textual markup languages that use "natural" markups and
+can be converted into different formats, especially into HTML. Examples are:
+</p>
+
+<ul>
+<li> <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>. There are many variants of it.
+     Markdown and most variants of it are not rich enough for
+     scientific documents. </li>
+
+<li> <a href="http://pandoc.org/index.html">Pandoc</a> is a command line program that
+     transforms from many input to many output formats, including HTML4, HTML5, 
+     epub, docx. Pandoc by default uses markdown with a large number of
+     extensions. For example, Markdown is only
+     for one file/document, but Pandoc-Markdown can handle multiple files for
+     one document. Pandoc-markdown has escape mechanisms, e.g., to include HTML
+     code directly, that is utilized when exporting to HTML, HTML5 or epub.
+     Therefore, in principal arbitrary HTML elements are supported. Experiments show that the transformation might be incomplete. There are several tools that are based on Pandoc-Markdown, for example:
+     
+
+<ul>
+     <li> <a href="https://atom.io/packages/markdown-preview-pandoc">Atom-pandoc</a>
+          is a plugin to the atom editor that has Pandoc-Markdown
+          syntax highlighting and shows the HTML-rendered transformed code with a keyboard
+          shortcut. </li>
+     <li> The commercial tool <a href="http://www.texts.io/">texts.io</a>
+          is a stand-alone GUI for (subset) Pandoc-Markdown. It is really nice and simple 
+          (like a very reduced office program). The most important pandoc transformations
+          are available via a menu. E.g. export in HTML, epub, docx, latex, pdf. 
+          Unfortunately cross-references within a document
+          (which is available in Pandoc-Markdown)
+          is not supported in the tested version 0.23.</li>
+     </ul>
+     </li>
+
+<li> <a href="https://en.wikipedia.org/wiki/ReStructuredText">ReStructured Text</a> 
+     is yet another Markdown dialect with many extensions. It is used especially in the
+     Python community. It seems to have a similar expressive power as Pandoc-Markdown.
+     A comparison between Pandoc-Markdown and ReStructured text is provided
+     <a href="http://www.unexpected-vortices.com/doc-notes/markdown-and-rest-compared.html">here</a>.
+     </li>
+
+<li> <a href="http://sphinx-doc.org/">Sphinx</a> is a document processing tool based on
+     ReStructured text. It is used a lot in the Python community and can generate HTML, HTML5,
+     epub and pdf (via Latex). It includes format neutral cross referencing, selection
+     of appropriate media types for figures, inline inclusion of source code, 
+     handling of mathematical equations, syntax highlighting. Furthermore, 
+     it is extensible. Martin Sjoelund provides a 
+     <a href="https://github.com/sjoelund/MLS-rst-spec">distribution of Sphinx</a> that is easy
+     to install under Windows without administrator rights (it includes a local installation of 
+     the needed Python version).
+     Sphinx does not have a graphical editor, but requires to define the document
+     with a text editor. After processing the sources (which seems to be quick also for
+     large documents), the resulting HTML can be viewed in a web browser.
+     Sphinx does not support section numbers in cross references (such as "see section 3.2.1").
+     </li>
+</ul>
+
+
+<h2 id="Latex">4.4 LaTeX</h2>
+
+<p>
+<a href="https://en.wikipedia.org/wiki/LaTeX">LaTeX</a> is the de-facto standard
+in the scientific community to produce<em> high-quality printed books</em>.
+It is natural to have a processing system
+that is able to transform a subset of LaTeX markups (or more precisely, the calls of TeX macros)
+in to HTML. 
+</p>
+
+<p>
+A short sketch of LaTeX to HTML tools is given by
+<a href="https://trac.modelica.org/Modelica/ticket/1730#comment:60">Martin Sjoelund </a>.
+His conclusion is that
+<a href="http://hevea.inria.fr/">Hevea</a> seems to be the best LaTeX to HTML converter.
+There is a distribution of 
+<a href="http://facweb.knowlton.ohio-state.edu/pviton/support/winport.html">Hevea for Windows </a>
+(the latest Windows version is from March 2013).
+I tried this distribution on Windows 7 but did not yet manage to get it running
+(when running in the installation directory of hevea: "hevea test\pavtest.tex"
+get the error message: "File error: Cannot open file: hevea.hva").
+</p>
+
+<h2 id="DocOnce">4.5 DocOnce</h2>
+
+<p>
+There is a markup.language called DocOnce. The author, Hans Petter Langtangen, 
+explains <a href="http://hplgit.github.io/doconce/doc/pub/slides/scientific_writing-1.html">here</a>
+why Sphinx, pandoc-markdown, LaTeX and other approaches are not sufficient for scientific books.
+He argues that he wants to have one document source and generate from this source
+(a) a book in high (LaTeX) quality and (b) a web-site in high (html) quality, 
+including modern (responsive) web design. He argues that this is not possible
+with any solution he knows (including Sphinx, pandoc-markdown and LaTeX) and
+therefore he invented a new markup-language and implemented the
+needed converters in Python.
+He used DocOnce to write a 900 page Springer book
+(<a href="http://www.springer.com/us/book/9783642549588">A Primer on Scientific Programming with Python</a>). 
+So, this is a practical proof that this language has everything what is needed
+to write (a) a scientific book and (b) a web page
+(there are many examples on the DocOnce web page).
+</p>
+
+<p>
+The drawbacks are:
+</p>
+
+<ul>
+<li> No WYSIWYG whatsoever, even no limited editor support
+     (like pandoc markdown in Atom editor).</li>
+<li> Naturally, DocOnce must "somehow" select a subset of book elements that
+     are supported both by html and by latex, in order that the tool can generate
+     for both targets. Maybe there is an escape mechanism for HTML/LaTeX command, so
+     that every command can be used (however, I did not yet figure this out).</li>
+<li> Hard to install (many Python packages are needed)</li>
+</ul>
+
+<p>
+From all inspected approaches, this seems to be the only one that is able
+to produce a printed and a web-site book in high quality from the same source.
+</p>
+
+<h2 id="sec-Summary">4.6 Summary</h2>
+
+<p>
+If a book shall be generated in <em>several</em> formats (say HTML and high-quality book in pdf),
+the markup languages sketched above seem currently to be the only choice
+and one has to accept their drawbacks. If HTML shall be the only book format,
+the situation is different:
+</p>
+
+<p>
+All the <em>reasonable</em> approaches discussed in this chapter have generally
+the drawback that no office-like graphical user environments are available
+to easily define the text. For some community this might be acceptable, for
+others not. The approach proposed in this book is better in this respect,
+because there are open source and commercial GUI programs to define
+HTML text in an office-like way.
+</p>
+
+<p>
+All these approaches also seem to not support the features that are important
+for a scientific web book: Numbering of sections, figures, tables, equations,
+and cross referencing these elements. Again, this is supported
+by the appraoch advocated in this book.
+</p>
+
+<p>
+A critical issue with all markup languages is
+the situation when the rendering of the generated code in
+a web browser is not as expected. The trouble is that there
+are so many error possibilities and it might be hard to find
+the source of the issue:
+</p>
+
+<ul>
+<li> There might be an error in the defined text (e.g. no escape character
+     of the markup language used).</li>
+
+<li> The markup language documentation may not resemble its implementation.</li>
+
+<li> The markup language tool might have a bug.</li>
+
+<li> The generated HTML code might be wrong (a bug in the generation tool)</li>
+
+<li> The web browser may have a bug or may not support a standard HTML definition</li>
+</ul> 
+
+<p>
+Note, all the markup languages in section <a href="#MarkupLanguages" title="4.3 Markup Languages (Markdown, Pandoc, ReStruturedText, Sphinx)">4.3</a>
+accept usually any input, and no error or warning is printed. Only by inspecting
+the rendered text in a web browser, one can usually detect that an error was made.
+</p>
+
+<p>
+With the approach proposed in this book, the error issue is less critical,
+because there are only two error sources: Wrong user input or bug/not-supported-feature
+in the web browser.
+</p>
+
+</main>
+</body></html>

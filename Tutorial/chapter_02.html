@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="content-type">
+
+
+
+
+<title>Tools</title>
+<link rel="stylesheet" type="text/css" href="resources/styles/stylesheet.css">
+</head>
+
+<body>
+<nav>
+<ul>
+  <li><a href="_tableofcontents.html">Table of Contents</a></li>
+  <li><a href="chapter_01.html">Previous</a></li>
+  <li><a href="chapter_03.html">Next</a></li>
+</ul></nav>
+
+
+<main>
+<h1 id="h1-tools">Chapter 2 - Tools</h1>
+
+<p>
+In this section additional tools are summarized that can
+help to build a web book.
+</p>
+
+
+<h2 id="editor">2.1 Graphical Editors</h2>
+
+<p>
+The book files can be edited manually with a text editor,
+requiring some basic HTML knowledge. The disadvantage is
+that there are always two phases: (1) Input the text with HTML mark-ups
+and (2) inspect the rendered text in a web browser.
+</p>
+
+<p>
+A convenient alternative is the open source
+web editor <a href="http://www.bluegriffon.com/">Blue Griffon</a>.
+It is available for Windows, Linux, Mac. For Windows, only a zip-file needs
+to be downloaded (no administrator rights needed). The editor allows a Word-like input,
+or a pure textual input (in the same way as a text-editor with HTML syntax highlighting),
+and it is possible to switch between the two.
+The most often needed commands (&lt;p&gt;, &lt;ul&gt;, &lt;ol&gt;) are directly
+provided in the tool bar. One just has to remember to use
+&lt;em&gt; (="!") and &lt;strong&gt; (= "!!") for <em>italic</em> and
+<strong>bold</strong> (there are buttons in the tool bar for them):
+When clicking on the button for "bold" (= "B") an ugly &lt;span style="font-weight: bold;"&gt;
+construct is generated. In the "Wysiwyg" mode, BlueGriffon spell checks the document and therefore English language errors are at once visible.</p>
+
+<p>
+The next figure shows a screenshot of BlueGriffon:
+</p>
+
+<figure>
+  <figcaption id="fig-bluegriffon">Figure 2-1: Bluegriffon screen shot</figcaption>
+  <img src="resources/media/bluiegriffon.png"><br>
+</figure>
+
+
+<p>
+Still another option is to use the <a href="https://atom.io">Atom text editor</a>
+with the plug-in <a href="https://atom.io/packages/atom-html-preview">atom-html-preview</a>.
+In this case, there is an online rendering of HTML5 with Javascript
+(so one sees nearly in real-time the rendered change when the HTML5 text is modified).
+</p>
+
+<h2 id="TextEditors">2.2 Text Editors supporting Mathematical Symbols</h2>
+
+<p>
+HTML text can also be directly written with a text editor. Most text editors
+have support for HTML syntax highlighting, so that the text displays well.
+When writing equations with jqmath (see section xxx) Unicode characters are used
+to define most mathematical symbols. It is very convenient to see these
+characters in the text editor. Independent of the text editor used, it is then
+important to use the "right" font in order that the text editor can display
+the Unicode characters. There is no font available for all Unicode characters.
+On <a href="http://ergoemacs.org/emacs/emacs_unicode_fonts.html">this web page</a>
+a discussion of such fonts is present and the DehjaVuMono font is recommended:
+"<em>DejaVu has significantly more Unicode symbols than other popular fixed-width
+fonts such as {Courier New, Sans Mono, Miriam Fixed, Lucida Console, Lucida Sans Typewriter}</em>".
+Furthermore, recently the <strong>Hack 2.0</strong> font was released, that is based
+on DejaVu and is claimed to be specially designed for programmers.
+You can download the (free, open source) fonts from here:
+</p>
+
+<ul><li>Hack font: <a href="http://sourcefoundry.org/hack/">http://sourcefoundry.org/hack/</a></li>
+    <li>DejaVuMono font: <a href="http://dejavu-fonts.org/wiki/Main_Page">http://dejavu-fonts.org/wiki/Main_Page</a>.<br>
+	    Download the <code>dejavu-fonts-ttf-2.35.zip</code> file and use file <code>DejaVuSansMono.ttf</code></li>
+</ul>
+
+<p>
+I have tried both and they seem to display a similar set of Unicode characters.
+Especially nearly all characters used by
+<a href="http://mathscribe.com/author/jqmath.html">jqmath</a>
+are displayed.
+I just recognized one important difference: DejaVuMono displays the
+middle dot point "·" whereas the Hack font doesn't display it
+(displays a blank character instead). Since this symbol
+is used as mathematical symbol, it seems more meaningful to use
+the DejaVuMono font.
+</p>
+
+<p>
+Under Windows you need adminstrator rights to install a font.
+Just click on the font file, e.g. on <code>Hack-Regular.ttf</code>,
+and then click on the <em>Install</em> button. Afterwards, this font
+shows up in the font menus of the programs on your computer,
+such as in Word or Notepad++.
+</p>
+
+<p>
+On Windows my preferred text editor is <a href="https://notepad-plus-plus.org/">Notepad++</a>.
+No administrator rights are needed when using the <a href="https://notepad-plus-plus.org/repository/6.x/6.8.3/npp.6.8.3.bin.zip">Notepad-zip package</a>
+installer. By default, Notepad++ (tried it in version 6.8.3) uses the "Courier New" font that does
+<strong>not</strong> display many of symbols used in jqmath. Changing the font under
+"<em>Settings / Style Configurator / Global Styles</em>" to "<em>Hack</em>" does not help.
+One has to select <em>Language</em> "</em>HTML</em>" and then use as Font name "<em>Hack</em>".
+</p>
+
+
+<h2 id="vector-graphics">2.3 Vector Graphics with SVG</h2>
+
+<p>
+The Web standard <a href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics">svg</a>
+defines vector graphic images. It is directly
+supported by FireFox and Chrome browsers.
+The open source tool <a href="https://inkscape.org/">Inkscape</a> has native support for svg
+(= images defined in Inkscape are stored in svg format) and can convert such
+an image to many other formats. When storing an image, it seems most portable
+to use "File / Save as / Plain". Furthermore, to get the right "bounding box"
+in the generated svg-file, use "File / Document Properties / Resize page to drawing or selection"
+and select some additional margins around this bounding box as shown in the
+next figure (= 5 pixels on every side additionally added):
+</p>
+
+<figure>
+  <figcaption id="fig-inkscape-document-properties">Figure 2-2: Inkscape document properties to define the bounding box</figcaption>
+  <img src="resources/media/inscapeDocumentProperties.png"><br>
+</figure>
+
+<p>
+The next figure shows a screenshot of Inkscape with the "moving mass" drawing
+(the outer rectangle is the "bounding box"):
+</p>
+
+<figure>
+  <figcaption id="fig-inkscape">Figure 2-3: Inkscape screen shot</figcaption>
+  <img src="resources/media/inkscape.png"><br>
+</figure>
+
+<p>
+The above vector graphics defined in Inkscape can be included
+into a web book in the following way (the "width" attribute
+defines the width of the vector graphics in pixels):
+</p>
+
+<pre>&lt;figure&gt;
+  &lt;figcaption&gt;Mass that is pulled with a constant force&lt;/figcaption&gt;
+  &lt;img src="resources/media/MovingMass.svg" width="300"/&gt;&lt;br /&gt;
+&lt;/figure&gt;
+</pre>
+
+
+<p>
+It is rendered as:
+</p>
+
+<figure>
+  <figcaption id="60378249">Figure 2-4: Mass that is pulled with a constant force</figcaption>
+  <img src="resources/media/MovingMass.svg" width="300"><br>
+</figure>
+
+<p>
+With Internet Explorer 9 (and probably with other renderers as well)
+the "width" attribute of svg-files is not
+correctly interpreted: The figure is displayed in "natural" size and
+the "width" attribute is used to cut/clip the figure.
+In such cases, it is best to not use the width attribute but provide
+the figure already in the "right" size:
+</p>
+
+<pre>&lt;figure&gt;
+  &lt;figcaption&gt;Mass that is pulled with a constant force&lt;/figcaption&gt;
+  &lt;img src="resources/media/MovingMass.svg"/&gt;&lt;br /&gt;
+&lt;/figure&gt;
+</pre>
+
+<p>
+which is rendered as
+</p>
+
+<figure>
+  <figcaption id="60374249">Figure 2-5: Mass that is pulled with a constant force (without width attribute)</figcaption>
+  <img src="resources/media/MovingMass.svg"><br>
+</figure>
+
+
+<h2 id="validators">2.4 HTML and CSS Validators</h2>
+
+<p>
+It is easy to make HTML and/or CSS markup mistakes. The browsers are often silently
+ignoring or "somehow" fixing the errors. It is therefore useful to validate the HTML-files.
+The official validators of the W3C consortium are:
+</p>
+
+<ul>
+<li> <a href="https://validator.w3.org/#validate_by_upload">HTML validation</a></li>
+<li> <a href="http://jigsaw.w3.org/css-validator/#validate_by_upload">CSS validation</a></li>
+</ul>
+</main>
+</body></html>

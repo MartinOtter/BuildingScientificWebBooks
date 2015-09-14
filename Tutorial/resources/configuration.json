@@ -1,0 +1,14 @@
+{
+  "BackupDirectory"         : "../_backup",
+  "CoverFileName"           : "_cover.html",
+  "TableOfContentsFileName" : "_tableofcontents.html",
+  "SectionsFileNames"       : ["_preface.html",
+                               "chapter_01.html",
+                               "chapter_02.html",
+                               "chapter_03.html",
+                               "chapter_04.html",
+                               "chapter_A.html",
+                               "chapter_B.html",
+                               "references.html"
+                               ]
+}

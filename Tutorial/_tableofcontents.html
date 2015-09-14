@@ -1,0 +1,125 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Table of contents</title>
+
+<link rel="stylesheet" type="text/css" href="resources/styles/stylesheet.css" />
+<script src="resources/styles/jquery-2.1.4.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#toggle").click(function(){
+        $("ul.tree").toggle();
+    });
+});
+</script>
+
+<style type="text/css">
+  ol      {margin: 0px 0 15px -10px; list-style-type: none;}
+  ul      {margin: 0px 0  0px -10px; list-style-type: none; white-space:nowrap; overflow:hidden}
+  ul.tree {display: none;}
+  li      {margin: 2px 0px 0px 0px;}
+  ol      {margin: 2px 0px 0px 0px;}  
+  a       {text-decoration: none; color: green;}
+  a:hover {text-decoration: underline;}
+  nav ul li a:hover {text-decoration: none;}
+</style>
+</head>
+<body>
+
+<nav><ul>
+  <li><a href="#" id="toggle">Expand/Collapse</a></li>
+</ul></nav>
+
+<h1>Table of Contents</h1>
+	
+<!-- BeginTableOfContents -->
+<ol>
+<li><a href="_cover.html"><strong>Book Cover</strong></a></li>
+
+
+<li><a href="_preface.html#preface"><strong>Preface</strong></a></li>
+
+<li><a href="chapter_01.html#BuildingWebBook"><strong>Chapter 1 - Steps to build a Scientific Web Book</strong></a>
+    <ol>
+    <li><a href="chapter_01.html#FileStructure">1.1 File Structure</a></li>
+    <li><a href="chapter_01.html#h2-Defining_the_book_structure">1.2 Defining the Book Structure</a></li>
+    <li><a href="chapter_01.html#makeWebBook">1.3 Updating the Book</a>
+        <ul class="tree">
+        <li><a href="chapter_01.html#h3subsection">1.3.1 Example of a h3 subsection</a>
+            <ul class="tree">
+            <li><a href="chapter_01.html#h4subsection">1.3.1.1 Example of a h4 subsection</a></li>
+            </ul></li>
+        </ul></li>
+    <li><a href="chapter_01.html#FiguresAndTables">1.4 Defining Figures and Tables</a>
+        <ul class="tree">
+        <li><a href="chapter_01.html#fig-Drive_Train_1">Figure 1-1: Simple drive train 1</a></li>
+        <li><a href="chapter_01.html#table-Example_for_a_table">Table 1-1: Example for a table</a></li>
+        </ul>
+    </li>
+    <li><a href="chapter_01.html#h2-MathematicalEquations">1.5 Defining Mathematical Equations</a>
+        <ul class="tree">
+        <li><a href="chapter_01.html#sec-how_to_use_jqmath">1.5.1 How to use jqmath</a></li>
+        <li><a href="chapter_01.html#sec-why_jqmath_and_not_mathjax">1.5.2 Why jqmath and not MathJax?</a></li>
+        </ul></li>
+    <li><a href="chapter_01.html#SourceCode">1.6 Defining Source Code Syntax Highlighting</a></li>
+    <li><a href="chapter_01.html#h2-BibliographicReferences">1.7 Defining Bibliographic References</a>
+        <ul class="tree">
+        <li><a href="chapter_01.html#tooltip">Figure 1-2: When hovering over a cross reference the titl...</a></li>
+        </ul>
+    </li>
+    <li><a href="chapter_01.html#h2-CrossReferences">1.8 Defining Cross References</a></li>
+    <li><a href="chapter_01.html#StyleFiles">1.9 Style Files</a></li>
+    </ol></li>
+
+<li><a href="chapter_02.html#h1-tools"><strong>Chapter 2 - Tools</strong></a>
+    <ol>
+    <li><a href="chapter_02.html#editor">2.1 Graphical Editors</a>
+        <ul class="tree">
+        <li><a href="chapter_02.html#fig-bluegriffon">Figure 2-1: Bluegriffon screen shot</a></li>
+        </ul>
+    </li>
+    <li><a href="chapter_02.html#TextEditors">2.2 Text Editors supporting Mathematical Symbols</a></li>
+    <li><a href="chapter_02.html#vector-graphics">2.3 Vector Graphics with SVG</a>
+        <ul class="tree">
+        <li><a href="chapter_02.html#fig-inkscape-document-properties">Figure 2-2: Inkscape document properties to define the bo...</a></li>
+        <li><a href="chapter_02.html#fig-inkscape">Figure 2-3: Inkscape screen shot</a></li>
+        <li><a href="chapter_02.html#60378249">Figure 2-4: Mass that is pulled with a constant force</a></li>
+        <li><a href="chapter_02.html#60374249">Figure 2-5: Mass that is pulled with a constant force (wi...</a></li>
+        </ul>
+    </li>
+    <li><a href="chapter_02.html#validators">2.4 HTML and CSS Validators</a></li>
+    </ol></li>
+
+<li><a href="chapter_03.html#missing-features"><strong>Chapter 3 - Missing Features</strong></a>
+    <ol>
+    <li><a href="chapter_03.html#otherCaptions">3.1 Other Captions</a></li>
+    <li><a href="chapter_03.html#h2-search_button">3.2 Search Button</a></li>
+    <li><a href="chapter_03.html#h2-index">3.3 Index</a></li>
+    <li><a href="chapter_03.html#h2-LinkIssue">3.4 Link Issue</a></li>
+    <li><a href="chapter_03.html#h2-ParsingIssue">3.5 Parsing Issue</a></li>
+    </ol></li>
+
+<li><a href="chapter_04.html#OtherAlternatives"><strong>Chapter 4 - Other Alternatives</strong></a>
+    <ol>
+    <li><a href="chapter_04.html#epub3">4.1 Epub3</a></li>
+    <li><a href="chapter_04.html#OfficeApplications">4.2 Office Applications</a></li>
+    <li><a href="chapter_04.html#MarkupLanguages">4.3 Markup Languages (Markdown, Pandoc, ReStruturedText, Sphinx)</a></li>
+    <li><a href="chapter_04.html#Latex">4.4 LaTeX</a></li>
+    <li><a href="chapter_04.html#DocOnce">4.5 DocOnce</a></li>
+    <li><a href="chapter_04.html#sec-Summary">4.6 Summary</a></li>
+    </ol></li>
+
+<li><a href="chapter_A.html#Appendix_A"><strong>Appendix A - makeWebBook Program</strong></a>
+    <ol>
+    <li><a href="chapter_A.html#sec-the-go-progamming-language">A.1 The Go Progamming Language</a></li>
+    <li><a href="chapter_A.html#sec-the_go_implementation-of-the-makewebbook_program">A.2 The Go Implementation of the makeWebBook Program</a></li>
+    </ol></li>
+
+<li><a href="chapter_B.html#ref-appendix_b"><strong>Appendix B - jqmath Symbols</strong></a></li>
+
+<li><a href="references.html#sec-References"><strong>References</strong></a></li>
+</ol>
+<!-- EndTableOfContents -->
+</body>
+</html>

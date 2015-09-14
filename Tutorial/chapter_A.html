@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="content-type">
+
+<title>Appendix A</title>
+<link rel="stylesheet" type="text/css" href="resources/styles/stylesheet.css">
+</head>
+
+<body>
+
+<nav><ul>
+  <li><a href="_tableofcontents.html">Table of Contents</a></li>
+  <li><a href="chapter_04.html">Previous</a></li>
+  <li><a href="chapter_B.html">Next</a></li>
+</ul></nav>
+
+
+<main>
+<h1 id="Appendix_A">Appendix A - makeWebBook Program</h1>
+
+<p>
+In this section the makeWebBook programm is shortly sketched.
+It is implemented in the
+<a href="http://golang.org/">Go</a> programming language from Google.
+The reason for this is explained in the next section.
+I used additionally the (simple) Integrated Development Environment
+<a href="https://github.com/visualfc/liteide">LideIDE</a>
+which makes developing with Go very convenient and fast.
+</p>
+
+<h2 id="sec-the-go-progamming-language">A.1 The Go Progamming Language</h2>
+
+<p>
+The programming language <em>Go</em> is developed since 2009 by Google.
+Its current version is 1.5 (from August 2015). I used Go to implement the  makeWebBook
+program for the following reasons:
+</p>
+
+<ul>
+<li> Go is <em>very portable and cross-plattform</em>:
+     Go does not use static or dynamic link libraries. Instead always just
+     one executable (for different platforms) is generated. Therefore,
+     sending or downloading this executable to someone else is sufficient
+     to just use the program on the respective platform.
+     It is orders of magnitudes simpler to build and ship a Go program
+     as, say, a C, C++, or Python program. For example, this project could have
+     been also implemented in Python. But it is difficult
+     (and outside of my capabilities)
+     to provide a distribution of a Python based program that can be installed
+     and works at once on every target environment.</li>
+
+<li> <em>Very simple to build an executable</em>. Go has no build-mechanism
+     and not static or dynamic libraires.
+     The Go package handler just generates the binaries of the used
+     packages automatically in the background and links all together.</li>
+
+     <li> The third party Go package <a href="https://github.com/PuerkitoBio/goquery">goquery</a>
+     provides similar features and a very convenient usage as the Javascript library
+     jquery. It is based on Go's net/html package (to parse HTML files)
+     and on the third party CSS Selector library
+     <a href="https://github.com/andybalholm/cascadia">cascadia</a>.
+     Package goquery allows to read and <em>analze HTML documents in a very simple way</em>,
+     especially the files for a web book as needed in this project.</li>
+
+<li> Go is a <em>statically typed, simple, yet powerful language</em>. It has a "C" like syntax
+     but is more powerful as "C" and much simpler to use. It is possible to learn "Go"
+     within an afternoon (just follow <a href="http://tour.golang.org/welcome/1">A tour of Go</a>)
+     and write productive code afterwards.
+     The Go specification is only available as a web page. When printing it (version 1.5 from Aug. 2015),
+     it has a size of around 100 pages (but using large fonts; so effectively around 60-70 pages). Compare: <br>
+     &nbsp;&nbsp;&nbsp;&nbsp;C++ (version 11): 680 pages<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;Java (version SE 8: 760 pages<br>
+     Of course, this just gives an indication how simple "Go" is with respect to C++ and Java,
+     but it is also clear that C++ and Java are much more expressive and more powerful as Go.</li>
+
+<li> <em>Simple to understand the code of others</em>. When inspecting code from others
+     (say the packages shipped with Go), it is rather straightforward to understand the code.
+     Some years ago I learned a bit <a href="http://www.scala-lang.org/">Scala</a>
+     and was impressed from its expressivenes.
+     But understanding Scala code from other programmers
+     (that utilizes the more advanced Scala features like
+     overloading of special characters, e.g. for very effective parsing)
+     is impossible for me.</li>
+
+<li> <em>Feels like a scripting language</em>: Due to the fast compiler (needs only a few
+     seconds to build an executable, at least after all used packages have been compiled
+     once) one can write code in the IDE, click on "Build & Run" and nearly immediately
+     get the result of the program. Furthermore, when initializing variables explicitly
+     in a declaration, then the <em>type of a variable</em> need only to be defined when defining
+     function arguments and when constructing dynamic data structures. For example:<br>
+     <pre>actualTime   := time.Now()<br>timeAsString := actualTime.Format(time.RFC3339)</pre>
+     declares two variables, but no type information has to be given
+     (<code>actualTime</code> is a structure and <code>timeAsString</code> is a string)</li>
+</ul>
+
+<p>
+Go has the following <em>drawbacks</em>:
+</p>
+
+<ul>
+<li> <em>Executables are large</em>: For example a simple "hello world" program
+     has a size of around 1.6 Mbyte. The makeWebBook executable has a size of
+     about 6 Mbyte (of course, if you would ship a Python "hello world" program in
+     one installer with everything included, it would be much larger as 1.6 Mbyte).</li>
+
+<li> <em>Limited number of packages</em>: Although there are quite a lot of packages
+     provided by the Go language team and third parties, the number and functionality
+     is small as compared to the huge number of libraries provided by the Python, Java,
+     or C++ community. Especially, it seems that the Go team does not provide any packages
+     for graphical user interfaces.This means before starting a Go project one has to
+     carefully evaluate, whether enough ready-to-use packages are available for the
+     respective task.</li>
+
+<li> <em>No exception handling</em>:
+     Error handling is a bit tedious because after every call of a program one has
+     to have an if-clause to inquire the error-flag. It is a pity, that no
+     (simple) catch/try error handling is available.</li>
+
+<li> <em>No generics or templates</em>:
+     Go has no support for generics or templates. This is understandable in order
+     to make a simple language</li>
+
+<li> <em>Garbagge collector</em>: Go automatically handles dynamic memory
+     with a garbagge collector. This gives simple, safe code, but has a space
+     and time overhead.</li>
+
+<li> As with all languages designed purely by computer scientists,
+     <em>support for arrays is very weak</em> (as compared to languages
+     like <a href="https://en.wikipedia.org/wiki/Fortran">Fortran 2008</a>,
+     <a href="http://www.mathworks.com">Matlab</a> or
+     <a href="https://www.modelica.org/">Modelica</a>). The native support is a bit better as in other
+     (computer scientist) languages due to array slicing support and to
+     give more control for re-sizing an array in an efficient way.
+     Futhermore, as always in computer scientist
+     languages, indexing starts at 0 (for an engineer it is unbelievable to
+     have four elements E1, E2, E3, E4 and access the <em>third</em> element E3 by
+     <em>index 2</em>).</li>
+</ul>
+
+<p>
+The alternative to Go would have been to use the
+<a href="https://www.rust-lang.org/">Rust</a> language from Mozilla.
+The design seems to be similar (e.g. also the Rust executables are large).
+I did not spend too much time on a comparison. The major reason to use Go was
+because it is from Google and the syntax of Go looks nicer to me
+(on first view Rust looks a bit like a functional programming language and
+I do not like this syntax and the very short abbreviations; e.g. in
+Modelica a function is called "<code>function</code>",
+in Go it is called "<code>func</code>"
+and in Rust it is called "<code>fn</code>". Rust does not have garbage collection,
+but it is still claimed to be "safe", and
+has support for generics).
+</p>
+
+
+<h2 id="sec-the_go_implementation-of-the-makewebbook_program">A.2 The Go Implementation of the makeWebBook Program</h2>
+
+<p>
+The program consists of two phases:
+</p>
+
+<ol>
+<li> In a first phase all files defined in configuration.json under "SectionsFileNames" are
+     read and analyzed with functions of the goquery package. As a result two data structures
+     are constructed:
+     <ul>
+     <li> <em>BookStructure.Sections</em> is made to constructed afterwards the
+          "Table-of-Contents". It contains the structure of the whole document in a
+          hierarchical form (independently in which file an element is stored).
+          Especially, there is an entry for all section, figure, table and
+          equation elements. In this phase, the numbering is checked and
+          if a number is missing or needs to be updated, then the updated
+          element information is stored in BookStructure.Sections. If an element
+          is modified, this is marked with a flag.</li>
+     <li> <em>BookStructure.SectionFiles</em> is made to update the files afterwards.
+          Therefore, information about all elements that need to be searched and
+          potentially modified in a file are stored in a sequential way.
+          For every element to potentially inspect the start and end tag is stored.
+          Furthermore, it is marked whether the file needs to be modified.
+          </li>
+     </ul>
+
+<li> In a second phase all files that are marked as "need to be modified" are copied
+     to the backup directory and then the file is newly constructed in the book directory.
+     This is performed in a simple way: The file is opened as a byte vector and then
+     all the element start tags stored in BookStructure.SectionFiles are searched in the
+     defined order. Once an element start tag is found, and the element needs to be
+     modified, then the element (from start to end tag) is newly constructed and
+     stored on file. All parts of the byte vector that need no modification are
+     just copied to the newly constructed file. </li>
+</ol>
+
+</main>
+</body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Missing Features</title>
+<link rel="stylesheet" type="text/css" href="resources/styles/stylesheet.css" />
+</head>
+
+<body>
+<nav><ul>
+  <li><a href="_tableofcontents.html">Table of Contents</a></li>
+  <li><a href="chapter_02.html">Previous</a></li>
+  <li><a href="chapter_04.html">Next</a></li>
+</ul></nav>
+
+
+<main>
+<h1 id="missing-features">Chapter 3 - Missing Features</h1>
+
+<p>
+The "makeWebBook" program as of September 2015 is a first step and
+several useful features are missing. In this chapter some
+extensions are summarized that should be implemented in the future.
+</p>
+
+
+<h2 id="otherCaptions">3.1 Other Captions</h2>
+
+<p>
+In web books other caption types might be useful, such as
+captions for examples (e.g. "Example 3-1"),
+captions for definitions (e.g. "Definition 4-1"),
+captions for animations with <a href="https://en.wikipedia.org/wiki/WebGL">webgl</a>
+(e.g. "Animation 5-1";  see <a href="http://webglsamples.org/">webgl examples</a>).
+It is not clear, how to formulate this.
+Currently, &lt;caption&gt; is seen as a caption for a <em>table</em>
+(e.g., "Table 3-1: table caption text ") and "makeWebBook" treats "Table 3-1"
+as the caption number. It might be better to generalize this and require from the
+user to use the right keyword and "makeWebBook" only updates the number.
+The tool collects then all captions with the same keyword, such as "Table"
+or "Example", and numbers the captions within one such keyword.
+</p>
+
+<h2 id="h2-search_button">3.2 Search Button</h2>
+
+<p>
+In a pdf-file it is common to easily search for a given string. 
+On a web site it is common to search for a given string within the
+respective site.
+A user therefore expects a <em>search button</em> in the tool bar.
+If the book is present on a web page, one could easily use a
+<em>Google search button</em>. However, the issue is how to implement
+a reasonable search when the book is stored locally on a computer.
+</p>
+
+<h2 id="h2-index">3.3 Index</h2>
+
+<p>
+Scientific books have usually an index that collects the most important
+keywords used in the book together with a reference to the most important sections
+where this keyword is used. It would be nice to add such a capability also here.
+This should be quite easy: In a text a keyword is marked in the following way:
+</p>
+
+<pre>&lt;span id="keyword-id" title="OptionalText"&gt;Keyword&lt;/span&gt;</pre>
+
+<p>
+The "makeWebBook" program collects all this information together and then 
+generats a separate file (similar as the table-of-contents file)
+where the <code>Keyword</code> is present or if a <code>title</code> is used,
+the <code>title</code> text. When clicking on this index entry, the browser
+jumps to the <code>span</code> element with the corresponding
+<code>keyword-id</code>.
+</p>
+
+<h2 id="h2-LinkIssue">3.4 Link Issue</h2>
+
+<p>
+When clicking on a cross-reference link, say in the "table of contents file", then
+the browser opens the respective file and positions the rendered page on top of the
+defined anchor. Unfortunately, at this place the (fixed) navigation bar is present and therefore
+the target line is not visible. One has to scroll a bit upwards to see it.
+</p>
+
+<p>
+On <a href="http://stackoverflow.com/questions/10732690/offsetting-an-html-anchor-to-adjust-for-fixed-header">Stackoverflow</a>
+there is a discussion of this topic, but none of the proposed solutions seem to work
+in a good way. A variant of one of these proposals is used in the
+CSS style file "resources/scripts/stylesheet.css" at the bottom of the file
+with comment "/* Move link target below the navigation bar */". This is also 
+not really perfect and should be improved if someone has a better idea.
+</p>
+
+<p>
+A completely different solution might be to use a fixed vertical navigation 
+bar at the left side. Then the link issue above would be gone and one
+could add more navigation possibilities (e.g. list all chapters).
+This extension would require a rather small extension of the
+"makeWebBook" program.
+</p>
+
+<h2 id="h2-ParsingIssue">3.5 Parsing Issue</h2>
+
+<p>
+The "makeWebBook" program collects information with the goquery package
+that does not distinguish between upper or lower case element/attribute names.
+When generating a new file, the file is read again but now a simple search
+facility is used to search for the start of an element, such as for
+"<code>&lt;h1</code>". Currently, only lower case characters are searched.
+Therefore, something will go wrong, if upper case letters are used
+for element/attribute names in the underyling HTML file.
+This should be fixed.
+</p>
+
+</main>
+</body>
+</html>
