@@ -1,0 +1,42 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Table of contents</title>
+
+<link rel="stylesheet" type="text/css" href="resources/styles/stylesheet.css" />
+<script src="resources/styles/jquery-2.1.4.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#toggle").click(function(){
+        $("ul.tree").toggle();
+    });
+});
+</script>
+
+<style type="text/css">
+  ol      {margin: 0px 0 15px -10px; list-style-type: none;}
+  ul      {margin: 0px 0  0px -10px; list-style-type: none; white-space:nowrap; overflow:hidden}
+  ul.tree {display: none;}
+  li      {margin: 2px 0px 0px 0px;}
+  ol      {margin: 2px 0px 0px 0px;}  
+  a       {text-decoration: none; color: green;}
+  a:hover {text-decoration: underline;}
+  nav ul li a:hover {text-decoration: none;}
+</style>
+</head>
+<body>
+
+<nav><ul>
+  <li><a href="#" id="toggle">Expand/Collapse</a></li>
+  <li><a href="index.html">Previous</a></li>
+  <li><a href="chapter01.html">Next</a></li>  
+</ul></nav>
+
+<h1>Table of Contents</h1>
+	
+<!-- BeginTableOfContents -->
+
+<!-- EndTableOfContents -->
+</body>
+</html>

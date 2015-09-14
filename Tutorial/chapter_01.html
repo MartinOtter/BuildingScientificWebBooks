@@ -39,9 +39,9 @@ one directory. Example:
 
 <pre>bookDirectory
    /resources            // directory in which auxiliary files are stored
-   _cover.html
-   _preface.html
-   _tableofcontents.html
+   index.html            // cover
+   preface.html
+   tableofcontents.html
    chapter_01.html
    chapter_02.html
    chapter_03.html
@@ -52,8 +52,8 @@ one directory. Example:
 </pre>
 
 <p>
-Separate files for the cover page (above: "_cover.html"),
-and a template for the table of contents page (above: "_tableofcontents.html")
+Separate files for the cover page (above: "index.html"),
+and a template for the table of contents page (above: "tableofcontents.html")
 must be present. Additionally, the files containing the chapters,
 sections, appendices, references, preface etc. must be present. 
 In principal the files can follow
@@ -84,16 +84,16 @@ Here is an example of configuration.json for this web book:
 </p>
 
 <pre>{
-  "BackupDirectory"         : "../_backup",
-  "CoverFileName"           : "_cover.html",
-  "TableOfContentsFileName" : "_tableofcontents.html",
+  "BackupDirectory"         : "../../_backup",
+  "CoverFileName"           : "cover.html",
+  "TableOfContentsFileName" : "tableofcontents.html",
   "SectionsFileNames"       : ["chapter_01.html",
                                "chapter_02.html",
                                "chapter_03.html",
-                               "chapter_04.html"
-                               "literature.html",
+                               "chapter_04.html",
                                "chapter_A.html",
-                               "chapter_B.html"]
+                               "chapter_B.html",
+                               "references.html",]
 }
 </pre>
 
