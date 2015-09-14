@@ -1,7 +1,7 @@
 Building Scientific Web Books
 =============================
 
-This web book describes how to build a scientific web book using the
+This [web book](http://martinotter.github.io/BuildingScientificWebBooks/Tutorial/) describes how to build a scientific web book using the
 makeWebBook program:
 
 A book consists of a set of HTML files. A configuration file
