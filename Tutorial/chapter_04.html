@@ -247,37 +247,14 @@ by the appraoch advocated in this book.
 </p>
 
 <p>
-A critical issue with all markup languages is
-the situation when the rendering of the generated code in
-a web browser is not as expected. The trouble is that there
-are so many error possibilities and it might be hard to find
-the source of the issue:
+It might be possible to combine the approaches.
+For example, if a tool generates HTML files with <code>id</code>
+attributes, then the makeWebBook program might be used to 
+add all the missing section, caption, and figure numbers.
+Equations can most likely not be handled, because a special
+marking is assumed by makeWebBook.
 </p>
 
-<ul>
-<li> There might be an error in the defined text (e.g. no escape character
-     of the markup language used).</li>
-
-<li> The markup language documentation may not resemble its implementation.</li>
-
-<li> The markup language tool might have a bug.</li>
-
-<li> The generated HTML code might be wrong (a bug in the generation tool)</li>
-
-<li> The web browser may have a bug or may not support a standard HTML definition</li>
-</ul> 
-
-<p>
-Note, all the markup languages in section <a href="#MarkupLanguages" title="4.3 Markup Languages (Markdown, Pandoc, ReStruturedText, Sphinx)">4.3</a>
-accept usually any input, and no error or warning is printed. Only by inspecting
-the rendered text in a web browser, one can usually detect that an error was made.
-</p>
-
-<p>
-With the approach proposed in this book, the error issue is less critical,
-because there are only two error sources: Wrong user input or bug/not-supported-feature
-in the web browser.
-</p>
 
 </main>
 </body></html>
