@@ -17,13 +17,11 @@
 <nav><ul>
   <li><a href="tableofcontents.html">Table of Contents</a></li>
   <li><a href="preface.html">Previous</a></li>
-  <li><a href="chapter_02.html">Next</a></li>
+  <li><a href="chapter_02.html">Next</a></li> 
 </ul></nav>
-
-
+<div class="headline">Building Scientific Web Books with makeWebBook</div>
 
 <main>
-
 <h1 id="BuildingWebBook">Chapter 1 - Steps to build a Scientific Web Book</h1>
 
 <p>
@@ -37,7 +35,7 @@ The files that shall form together a web book need to be all present in
 one directory. Example:
 </p>
 
-<pre>bookDirectory
+<pre>/bookDirectory
    /resources            // directory in which auxiliary files are stored
    index.html            // cover
    preface.html
@@ -337,7 +335,7 @@ The next line shows a block equation that is numbered:
 </p>
 
 <div class="equation" id="eq-solveQuadraticEquation">
-$$ (1.1) \;\;\;\;\;
+$$ (1.1) \;\;\;\;\;  
    x_{1,2} = {-b ± √{b^2-4ac} } / {2a}
 $$
 </div>
@@ -691,7 +689,7 @@ and the <code>makeWebBook</code> program adds the file name, the link text, and 
 For example, the following cross reference definitions:
 </p>
 
-<pre>see &lt;a href="#h1-tools"&lt;/a&gt;&lt;br&gt;
+<pre>see &lt;a href="#h1-tools"&gt;&lt;/a&gt;&lt;br&gt;
 see section &lt;a href="#h2-Defining_the_book_structure">&lt;/a&gt;&lt;br&gt;
 see &lt;a href="#fig-Drive_Train_1">&lt;/a&gt;&lt;br&gt;
 see &lt;a href="#table-Example_for_a_table">&lt;/a&gt;&lt;br&gt;
