@@ -38,10 +38,9 @@ li        { margin: 7px 0 10px 0px; }
 .centered { text-align: center }
 .indent   { margin-left: 40px; }
 .headline {text-align:center; font-size: 90%; color: #333; border-bottom: 1px solid grey;}
-.actual   {background-color: lightgrey;}
-.start    {margin-top:10px; border-top: 1px solid grey;}
 .bigSkip  {margin-top: 35px;}
 .box      {margin: 14px 0 14px 40px; padding: 2px 4px 2px 4px; border: 1px solid; display: table;}
+
 
 td, th { border: 1px solid rgb(220, 220, 220); vertical-align: top; padding: 2px; 
          font-size: 90%; line-height: 1.2;}
@@ -152,6 +151,9 @@ nav ul li a:hover {
   background-color: lightgrey;
   text-decoration: none;  
 }
+
+nav ul li a.start  {margin-top: 20px; }
+nav ul li a.actual {background-color: lightgrey;}
 
 
 /* Bibliography */
