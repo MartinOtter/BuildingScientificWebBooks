@@ -30,7 +30,7 @@
 </ul></nav>
 
 
-<div class="headline">Web Book: <em>Building Scientific Web Books</em> by Martin Otter</div>
+<div class="headline"><em>Building Scientific Web Books</em> by Martin Otter</div>
 
 
 <main>
@@ -62,16 +62,25 @@ one directory. Example:
 </pre>
 
 <p>
-Separate files for the cover page (above: "index.html"),
+Separate files for the cover page (above: "index.html")
 and a template for the table of contents page (above: "tableofcontents.html")
-must be present. Additionally, the files containing the chapters,
+must be present. Calling the cover page file "index.html" has the advantage
+that it is accessed on the web by the web-path to "bookDirectory"
+(HTML browsers automatically try file "index.html" if the web-path points to a
+directory). Additionally, the files containing the chapters,
 sections, appendices, references, preface etc. must be present. 
 In principal the files can follow
 any HTML standard. However, it is recommended to use the HTML5 standard
-(defined by the first line in the files: "<code>&lt;!DOCTYPE html&gt;</code>"),
-because new HTML elements like "&lt;nav&gt;", "&lt;figure&gt;", "&lt;footer&gt;" or "&lt;video&gt;"
-are only available in HTML5 (for details, see the list in
-<a href="http://www.w3schools.com/tags/ref_html_dtd.asp">w3schools</a>).</p>
+because new HTML elements like "&lt;nav&gt;", "&lt;figure&gt;", "&lt;footer&gt;" 
+or "&lt;video&gt;" are only available in HTML5 (for details, see the list in
+<a href="http://www.w3schools.com/tags/ref_html_dtd.asp">w3schools</a>).
+HTML5 is used if the first line in the respective file contains the 
+following text:
+</p>
+
+<pre>
+&lt;!DOCTYPE html&gt;
+</pre>
 
 <p>
 All auxiliary files, like css, javascript, bitmap-image, svg-image, video, audio files
@@ -129,8 +138,8 @@ To build a web book, execute the command:
 
 <p>
 The executable "makeWebBook" was  generated from the open source
-<a href="https://golang.org/">Go program</a>
-"makeWebBook.go".
+Go program
+<a href="https://github.com/MartinOtter/makeWebBook">makeWebBook.go</a>.
 It will modify the files under "bookDirectory" in the following way:
 </p>
 
@@ -175,7 +184,8 @@ In particular,
 </li>
 
 <li> A navigation bar is introduced in the section files with links to the
-     "table of contents" file, the previous, and the next file.
+     "table of contents" file, the previous, and the next file, as well as
+     to all &lt;h1&gt; sections.
     </li>
 
 <li> The "table of contents" file is updated with the actual document

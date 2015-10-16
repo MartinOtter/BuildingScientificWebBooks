@@ -23,14 +23,14 @@
 </ul></nav>
 
 
-<div class="headline">Web Book: <em>Building Scientific Web Books</em> by Martin Otter</div>
+<div class="headline"><em>Building Scientific Web Books</em> by Martin Otter</div>
 
 
 <main>
 <h1 id="missing-features">Chapter 3 - Missing Features</h1>
 
 <p>
-The "makeWebBook" program as of September 2015 is a first step and
+The "makeWebBook" program as of October 2015 is a first step and
 several useful features are missing. In this chapter some
 extensions are summarized that should be implemented in the future.
 </p>
@@ -85,24 +85,6 @@ jumps to the <code>span</code> element with the corresponding
 <code>keyword-id</code>.
 </p>
 
-<h2 id="h2-LinkIssue">3.4 Link Issue</h2>
-
-<p>
-When clicking on a cross-reference link, say in the "table of contents file", then
-the browser opens the respective file and positions the rendered page on top of the
-defined anchor. Unfortunately, at this place the (fixed) navigation bar is present and therefore
-the target line is not visible. One has to scroll a bit upwards to see it.
-</p>
-
-<p>
-On <a href="http://stackoverflow.com/questions/10732690/offsetting-an-html-anchor-to-adjust-for-fixed-header">Stackoverflow</a>
-there is a discussion of this topic, but none of the proposed solutions seem to work
-in a good way. A variant of one of these proposals is used in the
-CSS style file "resources/scripts/stylesheet.css" at the bottom of the file
-with comment "/* Move link target below the navigation bar */". This is also 
-not really perfect and should be improved if someone has a better idea.
-</p>
-
 <p>
 A completely different solution might be to use a fixed vertical navigation 
 bar at the left side. Then the link issue above would be gone and one
@@ -111,7 +93,7 @@ This extension would require a rather small extension of the
 "makeWebBook" program.
 </p>
 
-<h2 id="h2-ParsingIssue">3.5 Parsing Issue</h2>
+<h2 id="h2-ParsingIssue">3.4 Parsing Issue</h2>
 
 <p>
 The "makeWebBook" program collects information with the goquery package
