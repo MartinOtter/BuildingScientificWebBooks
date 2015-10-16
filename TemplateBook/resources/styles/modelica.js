@@ -10,7 +10,6 @@
 
    '|(^\\s*[\\w\\.]+)' +                     // components
 */
-
 var pattern = new RegExp(
   '\\s*\\b(algorithm|discrete|model|redeclare|and|each|final|not|replaceable|annotation|else|flow|operator|return|elseif|for|or|stream|block|elsewhen|function|outer|then|break|encapsulated|if|output|class|end|import|package|type|connect|enumeration|in|parameter|when|connector|equation|initial|partial|while|constant|expandable|inner|protected|within|constrainedby|extends|input|public|der|external|loop|record)\\b' +   // keywords
   '|(^\\s*(\\w+(\\.\\w+)*|\\.\\w+(\\.\\w+)*))' +  // components
@@ -45,6 +44,7 @@ function markPattern(str, keyword, component, dummy1, dummy2, comment, string) {
 
 function highlight() {
   var modelicaElements = document.getElementsByClassName('Modelica');
+  var equationElements = document.getElementsByClassName('ModelicaEquation');  
   var preElements      = document.getElementsByTagName('pre');
   var code, table, tr, td, parent, classType;
  
@@ -63,13 +63,18 @@ function highlight() {
      */
      declaration = true;
      modelicaElements[i].innerHTML = code.replace(pattern, markPattern);
-  } 
+  }
+
+  for (var i=0; i<equationElements.length; i++) {
+     declaration = false;
+     equationElements[i].innerHTML = equationElements[i].innerHTML.replace(pattern, markPattern);
+  }     
    
   var i = 0;
   while ( i < preElements.length ) {
      classType = preElements[i].getAttribute("class");
      
-     if (  classType == "Modelica" ) {
+     if (  classType == "Modelica" || classType == "Box") {
         code = preElements[i].innerHTML;        
     
         /* Change
@@ -95,11 +100,14 @@ function highlight() {
         parent = preElements[i].parentNode;
         parent.replaceChild(table, preElements[i]);   
         
-     } else {
-	    /* Remove first line break in <pre> */
+     } else if ( classType == "ModelicaNoBox" ) {
         code = preElements[i].innerHTML;        
         code = code.replace(/^\s*\n/, '');
-        preElements[i].innerHTML = code; 
+        declaration = true;
+        preElements[i].innerHTML = code.replace(pattern, markPattern); 
+        i++;
+        
+     } else {
         i++;
      }
   }

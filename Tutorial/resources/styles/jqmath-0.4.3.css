@@ -2,10 +2,6 @@
 	Firefox's MathML layout, which seems better than http://www.w3.org/TR/mathml-for-css/ */
 
  /*  'Open Sans', "Helvetica Neue", Helvetica, */ 
-   
-/* Otter: Use slightly enlarged font-size with respect to root-level font */
-math  { font-size: 1.3rem;}
-    
     
 /* Cambria [Math]'s line height currently (2/11) is large in most non-Microsoft browsers: */
 fmath, .fm-math		{ font-family: STIXGeneral, 'DejaVu Serif', 'DejaVu Sans',
@@ -144,3 +140,5 @@ mtable.ma-binom > mtr:first-child > mtd,
 fmath span.ma-binom > table > tbody > tr:first-child > td
 					{ padding: 0 0 0.18em 0 !important }
 
+
+               

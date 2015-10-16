@@ -1,6 +1,9 @@
 /* This defines styles and classes used in the book 
 
    Martin Otter, Sept. 13, 2015
+   
+   @import url('http://fonts.googleapis.com/css?family=Open+Sans');
+   'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif
 */
 
 @import url('http://fonts.googleapis.com/css?family=Open+Sans');
@@ -42,10 +45,11 @@ li        { margin: 7px 0 10px 0px; }
 .box      {margin: 14px 0 14px 40px; padding: 2px 4px 2px 4px; border: 1px solid; display: table;}
 
 
-td, th { border: 1px solid rgb(220, 220, 220); vertical-align: top; padding: 2px; 
+td, th { border: 1px solid rgb(220, 220, 220); vertical-align: top; padding: 4px; 
          font-size: 90%; line-height: 1.2;}
 th     { text-align: left; font-weight: normal; font-style: italic; }
 table  { margin: 14px 0 14px 40px; border: 0px solid rgb(220, 220, 220); border-collapse: collapse;}
+table.noBorder td {border: 0px}
 
 pre, code, td.Modelica, td.Box, code.Modelica, code.ModelicaDeclaration, span.pkeyword {
   font-family: "Courier New", monospace;
@@ -74,7 +78,12 @@ pre.ModelicaNoBox {
 
 math {
   text-align:left;
+  font-size: 1.3rem;  
+  line-height: 1.0;  
 }
+
+math[display="block"] mfrac>* {font-size: 100%;} 
+/* math mtable>* {line-height: 1.5;} */
 
 div.equation  {
    margin: 14px 0 14px 40px;
@@ -90,7 +99,7 @@ span.keyword  {color: blue; font-weight: bold;}
 span.component{color: red;}
 span.string   {color: rgb(0,128,0);}
 span.comment  {color: rgb(0,128,0); font-style: italic;}
-span.notReady{color: red;} 
+span.notReady {color: rgb(180, 180, 180);} 
 
 
 caption {
@@ -172,13 +181,11 @@ ul.references li {
 }
 
 /* Show underline in links only when hovering above it */
-a             {text-decoration: none; color: blue;}
-a:hover   {text-decoration: underline;}
+a      {text-decoration: none; color: blue;}
+a:hover{text-decoration: underline;}
 
 /* Links with the title attribute are displayed in italic */
 a[title] {font-style: italic;}
-  
-   
   
 .special {
     color: red;

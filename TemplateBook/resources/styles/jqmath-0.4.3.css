@@ -1,10 +1,12 @@
 /* "fm" classes are mostly for imitating MathML in browsers without it; we try to roughly mimic
 	Firefox's MathML layout, which seems better than http://www.w3.org/TR/mathml-for-css/ */
 
+ /*  'Open Sans', "Helvetica Neue", Helvetica, */ 
+    
 /* Cambria [Math]'s line height currently (2/11) is large in most non-Microsoft browsers: */
 fmath, .fm-math		{ font-family: STIXGeneral, 'DejaVu Serif', 'DejaVu Sans',
 						/* Cambria, 'Cambria Math', */ Times, 'Lucida Sans Unicode',
-						OpenSymbol, 'Standard Symbols L', serif; line-height: 1.2 }
+						OpenSymbol, 'Standard Symbols L', serif; line-height: 1.2; }
 fmath mtext, .fm-math mtext
 					{ line-height: normal }
 fmath mo, .fm-mo, .ma-sans-serif, fmath mi[mathvariant*=sans-serif],
@@ -137,3 +139,6 @@ mtable.ma-binom > mtr > mtd, fmath span.ma-binom > table > tbody > tr > td
 mtable.ma-binom > mtr:first-child > mtd,
 fmath span.ma-binom > table > tbody > tr:first-child > td
 					{ padding: 0 0 0.18em 0 !important }
+
+
+               
