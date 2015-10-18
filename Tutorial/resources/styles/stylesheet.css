@@ -1,9 +1,6 @@
-/* This defines styles and classes used in the book 
+/* Defines styles for a web book
 
-   Martin Otter, Sept. 13, 2015
-   
-   @import url('http://fonts.googleapis.com/css?family=Open+Sans');
-   'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif
+   Martin Otter, Oct. 17, 2015
 */
 
 @import url('http://fonts.googleapis.com/css?family=Open+Sans');
@@ -18,7 +15,6 @@ body {
   margin-right: 10px;
 }
 
-
 h1, h2, h3, h4, h5, h6 {
   font-family: inherit;
   line-height: 1.1;
@@ -28,10 +24,9 @@ h1, h2, h3, h4, h5, h6 {
 h1 { font-size:180%; margin:40px 0 14px 0; font-weight: bold;}
 h2 { font-size:140%; margin:22px 0 14px 0; font-weight: bold;}
 h3 { font-size:120%; margin:20px 0 14px 0; font-weight: bold;}
-h4 { font-size:100%; margin:18px 0 14px 0; font-weight: normal; font-style: italic;}
-h5 { font-size:100%; margin:18px 0 14px 0; font-weight: normal; font-style: italic;}
-h6 { font-size:100%; margin:18px 0 14px 0; font-weight: normal; font-style: italic;}
-
+h4 { font-size:100%; margin:18px 0 14px 0; font-weight: normal;}
+h5 { font-size:100%; margin:18px 0 14px 0; font-weight: normal;}
+h6 { font-size:100%; margin:18px 0 14px 0; font-weight: normal;}
 
 p         { margin: 14px 0 14px     0; }
 ul, ol    { margin: 14px 0 10px -10px; }
@@ -42,13 +37,14 @@ li        { margin: 7px 0 10px 0px; }
 .indent   { margin-left: 40px; }
 .headline {text-align:center; font-size: 90%; color: #333; border-bottom: 1px solid grey;}
 .bigSkip  {margin-top: 35px;}
-.box      {margin: 14px 0 14px 40px; padding: 2px 4px 2px 4px; border: 1px solid; display: table;}
+.box      {margin: 14px 0 14px 40px; padding: 2px 4px 2px 4px; border: 2px solid; display: table;}
 
 
 td, th { border: 1px solid rgb(220, 220, 220); vertical-align: top; padding: 4px; 
          font-size: 90%; line-height: 1.2;}
 th     { text-align: left; font-weight: normal; font-style: italic; }
-table  { margin: 14px 0 14px 40px; border: 0px solid rgb(220, 220, 220); border-collapse: collapse;}
+table  { margin: 14px 0 14px 40px; border: 0px solid rgb(220, 220, 220); 
+         border-collapse: collapse; page-break-inside: avoid; }
 table.noBorder td {border: 0px}
 
 pre, code, td.Modelica, td.Box, code.Modelica, code.ModelicaDeclaration, span.pkeyword {
@@ -61,6 +57,7 @@ pre {
   white-space: pre;
   margin     : 14px 0 14px 40px;
   overflow-x : hidden;
+  page-break-inside: avoid;     
 }
 
 td.Modelica, td.Box {
@@ -108,9 +105,10 @@ caption {
   margin-bottom: 5px;
   font-size    : 90%;
   font-style   : italic;
+  page-break-after: avoid;   
 }
 
-figure     { margin: 14px 0 14px 40px;}
+figure     { margin: 14px 0 14px 40px; }
 figcaption {
   margin-left  : -20px;
   margin-bottom: 5px;
@@ -190,4 +188,51 @@ a[title] {font-style: italic;}
 .special {
     color: red;
 }  
+
+/* Styles when printing the page */
+
+.page-break { display: none; }
+
+@media print {
+   body {
+     font-family: Calibri, Arial, sans-serif;
+     font-size: 10pt;
+     line-height: 1.3;
+     color: #000;
+     background: none;
+     margin-left: 10px;
+     margin-right: 10px;      
+   }
+   
+   h1 { font-size:14pt; page-break-after: avoid;}
+   h2 { font-size:12pt; page-break-after: avoid;}
+   h3 { font-size:11pt; page-break-after: avoid;}
+   h4 { font-size:10pt; page-break-after: avoid;}
+   h5 { font-size:10pt; page-break-after: avoid;}
+   h6 { font-size:10pt; page-break-after: avoid;}
+
+   table, figure, pre, .box {page-break-inside: avoid;}
+   caption, figcaption {page-break-after: avoid;}
+         
+   img { max-width: 100%;
+         page-break-inside: avoid;  
+         page-break-before: avoid;  
+   }
+         
+   pre, code, td.Modelica, td.Box, code.Modelica, code.ModelicaDeclaration, span.pkeyword {
+     font-size: 9pt;    
+   }   
+   
+   math {
+     font-size: 10pt;  
+   }   
+   
+   nav {
+     display: none;
+   }
+   
+   .headline {display: none;}   
+   
+   .page-break { display: block; page-break-before: always;}
+}
 

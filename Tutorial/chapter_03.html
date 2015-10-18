@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta content="text/html; charset=utf-8" http-equiv="content-type">
+
 <title>Missing Features</title>
-<link rel="stylesheet" type="text/css" href="resources/styles/stylesheet.css" />
+<link rel="stylesheet" type="text/css" href="resources/styles/stylesheet.css">
 </head>
 
 <body>
-<nav><ul>
+<nav>
+<ul>
   <li><a href="tableofcontents.html">Table of Contents</a></li>
   <li><a href="chapter_02.html">Previous</a></li>
   <li><a href="chapter_04.html">Next</a></li>
@@ -106,6 +108,152 @@ for element/attribute names in the underyling HTML file.
 This should be fixed.
 </p>
 
+<h2 id="h2-Converting_to_PDF_Format">3.5 Converting to PDF Format</h2>
+
+<p>
+Sometimes it would be useful to have the web book in pdf format.
+This is already now possible but requires manual effort.
+It would not require much effort to do this automatically as sketched below:</p>
+
+<p>The first step is to store one HTML file in pdf format. 
+There are HTML to PDF converters on the web, but it is unlikely that they 
+are useful for scientific web books. For example the commercial 
+Adobe Acrobat Pro XI program has a (in principal) nice converter 
+for any web page: Clicking in the tool bar on 
+"Convert Web Page to Adobe PDF ..." saves the currently inspected 
+web page in PDF-format. The program supports HTML5, CSS3 and Javascript. 
+However, it does not support SVG and not MathML. Therefore SVG images are 
+not present in the PDF file and jqmath equations do not look nice. </p>
+
+<p>The only meaningful approach seems to be to print the web page to file 
+via a printer driver (only then all elements are contained, including SVG 
+images and MathML equations generated internally by jqmath, because the 
+web browser renders the page and the rendered page is printed). 
+It is sufficient to use any postscript printer driver. These drivers 
+usually have the possibility to print to a file as well. The result is 
+a file in postscript (*.ps) format. With the open source 
+<a href="http://ghostscript.com/doc/current/Ps2pdf.htm">ghostscript</a> 
+program ps-files can be converted to pdf. With the open source
+<a href="http://www.ghostgum.com.au/">gsview</a> program, the conversion
+can be performed from a graphical user interface. In case the commercial
+Adobe Acrobat Pro program is available, the generation is very simple: 
+In the (Firefox) browser click on "File / Print ..." and then select 
+the printer "Adobe PDF". This printer driver generates directly a pdf-file of the current web page.</p>
+
+<p>Generating a page of a web book with a printer driver would not give 
+good results, because the (unaltered) rendered page is designed for viewing in 
+a web browser. For example, the navigation bar on the left side would be present. 
+For this reason, in the "resources/styles/stylesheet.css" file, 
+the following statement is present at the end:</p>
+
+<pre>@media print {
+  ...
+}
+</pre>
+
+<p>The CSS3 definitions present in this block overwrite the other 
+CSS3 definitions if the web page is printed. In particular it is defined that </p>
+
+<ul>
+<li>another font family is used,</li>
+<li>the font-sizes are reduced,</li>
+<li>the navigation bar and the page heading is removed,&nbsp;&nbsp;</li>
+<li>the maximum width of images (&lt;img&gt;) is restricted to the
+    page width (so images are automatically reduced in size if 
+    they would not fit on a page), </li>
+<li>page breaks <em>within</em> &lt;figure&gt;, &lt;table&gt;, &lt;pre&gt; elements shall be avoided, and</li>
+<li>page breaks <em>after</em> &lt;h1&gt;, &lt;h2&gt;, ..., &lt;h6&gt; elements are also avoided.</li>
+</ul>
+
+<p>
+Whenever all files of a web book are merged together in one file (see below), in the &lt;head&gt; 
+section of this file the following definition should be introduced:
+</p>
+
+<pre>
+&lt;style type="text/css"&gt;
+   h1       { page-break-before: always; }
+   h1.cover { page-break-before: avoid;  }
+&lt;/style&gt;
+</pre>
+
+<p>
+and the first &lt;h1&gt; definition in the cover page should be defined as
+</p>
+
+<pre>
+&lt;h1 id="cover-page" class="cover"&gt; ... &lt;/h1&gt;
+</pre>
+
+<p>
+As a result, a page break is introduced before every <em>Chapter</em>,
+but not on the cover page.</p>
+
+<p>Additionally, the CSS class <em>page-break</em> is defined in the 
+"resources/styles/stylesheet.css" file. It introduces a page break at the defined
+location when printing the page. Therefore, whenever the pdf file does not look good,
+it might help to use</p>
+
+<pre>
+&lt;div class="page-break" /&gt;
+</pre>
+
+<p>
+in order to introduce a page break.
+</p>
+
+<p>With these definitions, the pdf-file generated from a web book file looks usually good.</p>
+
+<p>It remains to generate one HTML5 file from all web book files. Currently, 
+this must be done by manually copying all &lt;body&gt;...&lt;/body&gt; elements
+in one file and printing this file. It would be not much work to extend the 
+"makeWebBook" program with an option to do this automatically.</p>
+
+<p>There are the following remaining (not yet solved) issues:</p>
+
+<ul>
+<li> With a postscript or Adobe PDF printer driver hyperlinks are not retained. 
+     Therefore, in the pdf-file the hyperlinks are still marked in "blue" but they 
+     have no effect (it is not possible to click on them).</li>
+<li> In the "table of contents" the page numbers of the sections and sub-sections
+     should be present, but they aren't.</li>
+</ul>
+
+<p class="bigSkip">
+There are professional (expensive) solutions to generate high-quality books from
+HTML5 and CSS in PDF format. Especially:
+</p>
+
+<ul>
+<li> <a href="http://www.princexml.com/">Prince</a> </li>
+<li> <a href="http://www.pdfreactor.com/">PDFreactor</a></li>
+</ul>
+
+<p>
+From the description it is not clear whether all elements needed for a
+scientific web book are supported, especially it seems that MathML and
+SVG are not supported.
+</p>
+
+<p>
+There are W3C working drafts to define the layout of printed books with HTML5 and CSS, especially
+<a href="http://www.w3.org/TR/css3-page/">CSS Paged Media Module Level 3</a> and
+<a href="http://www.w3.org/TR/css-gcpm-3/">CSS Generated Content for Paged Media Module</a>.
+A nice overview with several examples is provided in the web article
+<a href="http://www.smashingmagazine.com/2015/01/designing-for-print-with-css/">Designing For Print With CSS</a>. These features are not supported in Firefox version 41 (anyway, the
+proposals are working drafts and are not yet released). However,
+<a href="http://www.princexml.com/">Prince</a> supports them and is then
+able to generate high quality, nice looking, printed books in pdf format.
+</p>
+
+<p>
+Note, the CSS2 properties <em>counter-reset</em> and <em>counter-increment</em>
+to number HTML elements are supported by Firefox and most other browsers.
+However, it is an incomplete solution and not sufficient for a scientific web-book.
+Even if it would be sufficient, there is the major drawback that the actual
+numbers are only visible in the rendered page and <em>not</em> in the HTML
+file. This is inconvenient when inspecting/editing the file with a text editor.
+</p>
+
 </main>
-</body>
-</html>
+</body></html>
